@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>Blader</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: hsl(0, 0%, 10%);
+            color: hsl(0, 0%, 90%);
+        }
+
+        button {
+            width: fit-content;
+            cursor: pointer;
+
+            padding: 10px;
+            --padding-button: 5px;
+            margin: 0;
+
+            border-style: none;
+            border-radius: 5px;
+
+            white-space: nowrap;
+
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+
+            font: inherit;
+            color: inherit;
+            background: none;
+            background-color: hsl(0, 0%, 20%);
+
+            -webkit-tap-highlight-color: transparent;
+
+            position: relative;
+            /* --padding-button: 5px; */
+            margin: var(--padding-button);
+        }
+
+        button::before {
+            position: absolute;
+            top: calc(var(--padding-button) * -1);
+            left: calc(var(--padding-button) * -1);
+            padding: var(--padding-button);
+            height: 100%;
+            width: 100%;
+            content: '';
+        }
+
+        button:hover,
+        .button:hover {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+        }
+
+        button:active,
+        .button:active {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<script type="module" src="./main.js"></script>
+
+</html>

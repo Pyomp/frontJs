@@ -1,0 +1,6 @@
+<svg version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" stroke-linecap="round">
+  <path d="m50 4.9805c24.941 0 45.019 20.079 45.019 45.019s-20.079 45.019-45.019 45.019-45.019-20.079-45.019-45.019 20.079-45.019 45.019-45.019z" fill-opacity=".50342" fill-rule="evenodd" stroke="#00fd2b" stroke-linejoin="bevel" stroke-width="9.9611" style="paint-order:stroke markers fill"/>
+  <path d="m73.206 32.357-26.683 36.836-18.199-18.658" stroke="#00ff2c" stroke-linejoin="round" stroke-width="10"/>
+ </g>
+</svg>
