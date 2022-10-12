@@ -1,8 +1,8 @@
-import { View } from '../../../modules/dom/View.js'
+import { button, div, p, span } from '../../../dom/View.js'
 
-export class ViewTest {
-    view = new View('div', {
-        ref: 'container',
+function createHtml(parent) {
+    return div({
+        parent,
         style: {
             width: 'fit-content',
             background: 'hsla(0, 0%, 0%, 0.5)',
@@ -15,50 +15,46 @@ export class ViewTest {
                 cursor: pointer;
             }
         `,
-        children: [
-            new View('button', { ref: 'woow', i18n: 'Wooow' }),
-            new View('div', {
-                children: [
-                    new View('button', { ref: 'minus', textContent: ' - ' }),
-                    new View('span', { ref: 'infoSpan', textContent: '0' }),
-                    new View('button', {
-                        ref: 'plus',
-                        textContent: ' + ',
-                        style: {
-                            fontSize: 'larger',
-                        }
-                    }),
-                ]
-            }),
-            new View('p', {
-                ref: 'pwoow',
+    }, [
+        button({ ref: 'woowButton', i18n: 'Wooow' }),
+        div({}, [
+            button({ ref: 'minusButton', textContent: ' - ' }),
+            span({ ref: 'infoSpan', textContent: '0' }),
+            button({
+                ref: 'plusButton',
+                textContent: ' + ',
                 style: {
-                    opacity: 0,
-                    transition: 'opacity 0.5s'
-                },
-                i18n: 'coucou world'
+                    fontSize: 'larger',
+                }
             })
-        ]
-    })
+        ]),
+        p({
+            ref: 'woowP',
+            style: {
+                opacity: 0,
+                transition: 'opacity 0.5s'
+            },
+            i18n: 'coucou world'
+        })
+    ])
+}
 
-    #woowButton = this.view.ref['woow']
-    #minusButton = this.view.ref['minus']
-    #infoSpan = this.view.ref['infoSpan']
-    #plusButton = this.view.ref['plus']
-    #woowP = this.view.ref['pwoow']
+export function createViewTest(parent) {
+    const view = createHtml(parent)
+    const { woowButton, minusButton, infoSpan, plusButton, woowP } = view.ref
 
-    #onCreate = () => { this.#woowP.style.opacity ^= 1 }
-    #onMinus = () => { this.#infoSpan.textContent-- }
-    #onPlus = () => { this.#infoSpan.textContent++ }
+    const create = () => { woowP.style.opacity ^= 1 }
+    const minus = () => { infoSpan.textContent-- }
+    const plus = () => { infoSpan.textContent++ }
 
-    constructor(parent) {
-        parent.appendChild(this.view.element)
-        this.#woowButton.addEventListener('click', this.#onCreate)
-        this.#minusButton.addEventListener('click', this.#onMinus)
-        this.#plusButton.addEventListener('click', this.#onPlus)
-    }
+    parent.appendChild(this.view.element)
+    woowButton.addEventListener('click', create)
+    minusButton.addEventListener('click', minus)
+    plusButton.addEventListener('click', plus)
 
-    dispose() {
-        this.view.element.remove()
+    return {
+        dispose() {
+            view.dispose()
+        }
     }
 }

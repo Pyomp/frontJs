@@ -1,6 +1,6 @@
 
 
-/** @param {CSSStyleDeclaration} style */
+/** @param {CSSStyleDeclaration | {}} style */
 export const setStyle = (element, style = {}) => {
     const s = element.style
     for (const key in style) {
@@ -23,16 +23,17 @@ class Shadow extends HTMLElement {
 }
 customElements.define('shadow-content', Shadow)
 
-/**
- * Help to construct view for javascript classes.  
- * - You can construct nested view with the parameter `children`  
- * - `View.i18n` can be set with a callback at the begin of the app to handle internationalization.  
- * - set `ref` to get the element from the root of the view ex:`this.#button = container.ref['myButton']`  
- * - If `shadowStyle` is set, `this.element` will be a `webcomponent` in shadow DOM (style while be scoped).  
- * 
- * See exemple at `/examples/view`.  
- * 
- * Note: `attributes` in `constructor` is an arbitrary object, `HTMLInputElement` in the doc is just for vscode autocompletion.
+/** 
+ * @typedef {{
+ *      ref?: string,
+ *      style?: CSSStyleDeclaration | {},
+ *      parent?: Element,
+ *      classList?: string[],
+ *      shadowStyle?: string,
+ *      i18n?: string,
+ *      textContent?: string,
+ *      attributes?: HTMLElement | HTMLInputElement | {}
+ * }} ViewParam 
  */
 export class View {
 
@@ -40,23 +41,14 @@ export class View {
         element.textContent = text
     }
 
+
     /** @type {{[ref: string]: HTMLElement | HTMLInputElement }} */
     ref = {}
     element
 
     /**
      * @param {string} tag
-     * @param {{
-     *      ref?: string,
-     *      style?: CSSStyleDeclaration | {},
-     *      parent?: Element,
-     *      children?: View[],
-     *      classList?: string[],
-     *      shadowStyle?: string,
-     *      i18n?: string,
-     *      textContent?: string,
-     *      attributes?: HTMLElement | HTMLInputElement | {}
-     * }} params
+     * @param {ViewParam} params
      */
     constructor(
         tag = 'div', {
@@ -82,6 +74,7 @@ export class View {
 
         setStyle(element, style)
 
+        this.#children = children
         for (const child of children) {
             if (child.constructor === String) {
                 element.appendChild(span({ i18n: child }).element)
@@ -101,17 +94,31 @@ export class View {
                 element[key] = attributes[key]
 
         if (i18n) {
-            View.i18n(element, i18n)
+            this.#i18nUnregister = View.i18n(element, i18n)
         } else if (textContent) {
             element.textContent = textContent
         }
+    }
 
+    #i18nUnregister
+    #children
+    dispose() {
+        if (this.#i18nUnregister) this.#i18nUnregister()
+        this.element.remove()
+        for (const child of this.#children) {
+            child.dispose()
+        }
     }
     isDisplayed() {
         return !!this.element.parentNode
     }
 }
 
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
 export function div({
     ref = '',
     style = {},
@@ -125,6 +132,11 @@ export function div({
     return new View('div', arguments[0], children)
 }
 
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
 export function button({
     ref = '',
     style = {},
@@ -138,6 +150,11 @@ export function button({
     return new View('button', arguments[0], children)
 }
 
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
 export function span({
     ref = '',
     style = {},
@@ -151,6 +168,11 @@ export function span({
     return new View('span', arguments[0], children)
 }
 
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
 export function input({
     ref = '',
     style = {},
@@ -162,5 +184,23 @@ export function input({
     attributes = {}
 }, children = []) {
     return new View('input', arguments[0], children)
+}
+
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
+export function p({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('p', arguments[0], children)
 }
 
