@@ -1,6 +1,6 @@
-import { EventDispatcher, EventSet } from '../../modules/common/EventDispatcher.js'
-import { repeatClick } from '../../modules/dom/eventUtils.js'
-import { View } from '../../modules/dom/View.js'
+import { EventDispatcher, EventSet } from '../../common/EventDispatcher.js'
+import { repeatClick } from '../../dom/eventUtils.js'
+import { View } from '../../dom/View.js'
 import { SkinView } from '../../webGlEngine/debug/components/SkinView.js'
 import { Blader3D } from './Blader3D.js'
 

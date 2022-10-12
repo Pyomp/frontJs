@@ -1,4 +1,4 @@
-import { View } from '../../../modules/dom/View.js'
+import { View } from '../../../dom/View.js'
 
 export class SkinView extends View {
     constructor(parent) {

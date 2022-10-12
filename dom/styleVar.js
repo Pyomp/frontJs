@@ -3,7 +3,7 @@ import { queueMicrotaskOnce } from './eventLoopOnce.js'
 
 /**
  * Dictionary of css var, auto init a the loading.  
- * Its reactif: set or delete a value will update the style element.  
+ * Its reactive: set or delete a value will update the style element.  
  */
 export const styleVar = new Proxy({
     '--background1': 'hsl(0, 0%, 4%)',

@@ -1,7 +1,7 @@
 import { Euler } from '../../math/Euler.js'
 import { Quaternion } from '../../math/Quaternion.js'
 import { Vector3 } from '../../math/Vector3.js'
-import { CanvasRecorder } from '../../modules/misc/CanvasRecorder.js' 
+import { CanvasRecorder } from '../../misc/CanvasRecorder.js' 
 import { FPSView } from './components/FPSView.js' 
 
 export class MainDebugView {
@@ -10,7 +10,6 @@ export class MainDebugView {
         renderer,
         parent = document.body,
     }) {
-
         this.container = document.createElement('div')
         this.container.style.padding = '10px'
         parent.appendChild(this.container)

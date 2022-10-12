@@ -5,7 +5,7 @@ import { Matrix4 } from '../../math/Matrix4.js'
 import { Quaternion } from '../../math/Quaternion.js'
 import { Sphere } from '../../math/Sphere.js'
 import { Vector3 } from '../../math/Vector3.js'
-import { EventDispose } from '../../modules/common/Events.js'
+import { EventDispose } from '../../common/Events.js'
 
 /**
  * A node can have multiple objects (like meshes), the world matrix will be shared.  
@@ -56,7 +56,7 @@ export class Node3D extends EventTarget {
         for (const object of objects) {
             this.#addObject(object)
         }
-        
+
         this.parent?.addNode(this)
     }
 

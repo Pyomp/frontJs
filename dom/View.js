@@ -63,13 +63,12 @@ export class View {
             ref = '',
             style = {},
             parent,
-            children = [],
             classList = [],
             shadowStyle = ``,
             i18n = '',
             textContent = '',
             attributes = {}
-        },
+        }, children = []
     ) {
         // create element and handle shadow content if shadow style is set
         this.element = shadowStyle ? new Shadow(shadowStyle) : document.createElement(tag)
@@ -84,10 +83,14 @@ export class View {
         setStyle(element, style)
 
         for (const child of children) {
-            element.appendChild(child.element)
-            for (const key in child.ref) {
-                if (this.ref[key]) throw new Error('view 2 sames name')
-                this.ref[key] = child.ref[key]
+            if (child.constructor === String) {
+                element.appendChild(span({ i18n: child }).element)
+            } else {
+                element.appendChild(child.element)
+                for (const key in child.ref) {
+                    if (this.ref[key]) throw new Error('view 2 sames name')
+                    this.ref[key] = child.ref[key]
+                }
             }
         }
         for (const value of classList)
@@ -104,12 +107,60 @@ export class View {
         }
 
     }
-    isDisplayed(){ 
+    isDisplayed() {
         return !!this.element.parentNode
     }
 }
 
+export function div({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('div', arguments[0], children)
+}
 
+export function button({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('button', arguments[0], children)
+}
 
+export function span({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('span', arguments[0], children)
+}
 
+export function input({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('input', arguments[0], children)
+}
 

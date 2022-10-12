@@ -9,9 +9,9 @@ addEventListener('pointerdown', () => {
 
 /**
  * @param {HTMLElement} element 
- * @param {function(PointerEvent, deltaX, deltaY)} onMove
- * @param {function(PointerEvent)} onDown
- * @param {function(PointerEvent)} onUp
+ * @param {function(PointerEvent, deltaX, deltaY): void} onMove
+ * @param {function(PointerEvent): void} onDown
+ * @param {function(PointerEvent): void} onUp
  * 
  * @returns {()=>{}} delete event listeners
  */
