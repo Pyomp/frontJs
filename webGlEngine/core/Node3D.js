@@ -3,19 +3,10 @@ import { Box3 } from '../../math/Box3.js'
 import { Matrix3 } from '../../math/Matrix3.js'
 import { Matrix4 } from '../../math/Matrix4.js'
 import { Quaternion } from '../../math/Quaternion.js'
-import { Sphere } from '../../math/Sphere.js'
 import { Vector3 } from '../../math/Vector3.js'
-import { EventDispose } from '../../common/Events.js'
+import { EventSet } from '../../common/EventDispatcher.js'
 
-/**
- * A node can have multiple objects (like meshes), the world matrix will be shared.  
- * 
- * Why ? I follow the GLTF logic:
- * When you make a object in Blender, you can assign multiple materials on it.
- * In GLTF data, this object will get __multiple__ "primitives".
- * A primitive have one geometry and one material (that make a mesh).
-*/
-export class Node3D extends EventTarget {
+export class Node3D {
     static defaultScene
     /** @type {Set<Node3D>} */
     children = new Set()
@@ -25,6 +16,8 @@ export class Node3D extends EventTarget {
 
     /** @type {Set<Object3D>} */
     objects = new Set()
+
+    onDispose = new EventSet()
 
     /**
      * @param {{
@@ -145,7 +138,7 @@ export class Node3D extends EventTarget {
             child.dispose()
         }
 
-        this.dispatchEvent(EventDispose)
+        this.onDispose.emit()
     }
 
     /**

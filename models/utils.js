@@ -25,3 +25,12 @@ export function deleteArray(array, element) {
     if (index === -1) return
     array.splice(index, 1)
 }
+
+export function parseHash(hash) {
+    const params = {}
+    for (const hk of hash.substring(1).split('&')) {
+        const temp = hk.split('=')
+        params[temp[0]] = temp[1]
+    }
+    return params
+}

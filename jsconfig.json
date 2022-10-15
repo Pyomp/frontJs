@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es6",
+        "moduleResolution": "classic",
+        // "checkJs": true,
+        // "experimentalDecorators": true,
+        "alwaysStrict": true,
+        "baseUrl": ".",
+        "disableSizeLimit": true,
+        // "forceConsistentCasingInFileNames": true,
+        //"paths": {}
+        "pretty": true,
+        "rootDir": ".",
+    },
+    "exclude": [
+        "build",
+        "builder",
+        "node_modules",
+    ]
+}

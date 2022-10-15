@@ -46,9 +46,7 @@ export class Timer {
                             if (cb((this.#last_d + 3) % 7) === true) this.updatesDay.delete(cb)
                         }
                     }
-
                 }
-
             }
         }
     }

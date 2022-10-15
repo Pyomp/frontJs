@@ -81,7 +81,7 @@ export class View {
             } else {
                 element.appendChild(child.element)
                 for (const key in child.ref) {
-                    if (this.ref[key]) throw new Error('view 2 sames name')
+                    if (this.ref[key]) throw new Error('view 2 sames ref')
                     this.ref[key] = child.ref[key]
                 }
             }
@@ -109,6 +109,7 @@ export class View {
             child.dispose()
         }
     }
+
     isDisplayed() {
         return !!this.element.parentNode
     }
@@ -130,6 +131,24 @@ export function div({
     attributes = {}
 }, children = []) {
     return new View('div', arguments[0], children)
+}
+
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
+export function label({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('label', arguments[0], children)
 }
 
 /**

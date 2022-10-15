@@ -69,18 +69,16 @@ const register = (htmlElement, str) => {
     htmlElement.textContent = getStr(str)
 }
 
-/** @param {HTMLElement} parent */
-const unregister = (parent) => {
-    for (const child of parent.children) {
-        // recursion
+const unregister = (element) => {
+    const index = htmlElements.indexOf(element)
+    if (index === -1) return
+    htmlElements.splice(index, 1)
+    strs.splice(index, 1)
+
+    for (const child of element.children) {
         if (child.children.length > 0) {
             unregister(child)
         }
-
-        const index = htmlElements.indexOf(child)
-        if (index === -1) return
-        htmlElements.splice(index, 1)
-        strs.splice(index, 1)
     }
 }
 

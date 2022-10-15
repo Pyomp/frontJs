@@ -1,9 +1,9 @@
 import { Controls } from './models/Controls.js'
-import { KeyCode } from './models/KeyCode.js'
+import { KeyCode } from './keyCode.js'
 import { Player } from './models/Player/Player.js'
 import { Progress } from './models/Progress.js'
 import { Settings } from './models/Settings.js'
-import { SkillsCd } from './models/SkillsCD.js'
+import { SkillsCd } from './models/SkillsCD.js.js'
 
 export class AppData {
 
