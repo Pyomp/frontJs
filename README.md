@@ -2,8 +2,8 @@ Vanilla JS | No package manager | No build | Performance | Passion | Tests | Reu
 
 # Examples
 
-- [Animating 3D model with control, 20 dynamic point light](./frontJs/examples/blader/index.html)
-- [Style switcher no .css (full javascript)](./frontJs/examples/styles/index.html)
+- [Animating 3D model with control, 20 dynamic point light](https://pyomp.github.io/frontJs/examples/blader/index.html)
+- [Style switcher no .css (full javascript)](https://pyomp.github.io/frontJs/examples/styles/index.html)
 
 # Progress
 
