@@ -28,7 +28,11 @@ function createView() {
         style: {
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
             maxWidth: '200px',
+            margin: 'auto',
+            height: '100%'
         }
     }, [
         twitchButton,
@@ -115,7 +119,6 @@ function getComponent() {
     component = {
         display() {
             document.body.appendChild(view.container.element)
-
         },
         dispose,
     }
