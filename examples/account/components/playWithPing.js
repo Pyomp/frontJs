@@ -1,5 +1,5 @@
-import { button, div, span } from "../../dom/View.js"
-import { ws, WsConnecting } from "./wsManager.js"
+import { button, div, span } from "../../../dom/View.js"
+import { ws, WsConnecting } from "../services/wsManager.js"
 
 function createView() {
     return div({}, [

@@ -27,10 +27,19 @@ export function deleteArray(array, element) {
 }
 
 export function parseHash(hash) {
+    if (hash?.constructor !== String) return {}
     const params = {}
     for (const hk of hash.substring(1).split('&')) {
         const temp = hk.split('=')
+        if (temp.length < 2) return {}
         params[temp[0]] = temp[1]
     }
     return params
+}
+
+export class TimeoutAbortController extends AbortController {
+    constructor(ms) {
+        super()
+        setTimeout(() => this.abort(), ms)
+    }
 }

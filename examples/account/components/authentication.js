@@ -1,10 +1,77 @@
-import { inputCheckbox } from "../../dom/components/inputCheckbox.js"
-import { button, div } from "../../dom/View.js"
-import { LocalStorageStayConnected } from "../constants/localstorage.js"
-import { providersToken, ProvidersTokenBusy, ProvidersTokenReady } from "./providersToken.js"
-import { ws, WsAuthenticationFail, WsClose, WsOpen } from "./wsManager.js"
+import { button, div } from "../../../dom/View.js"
+import { providersToken, ProvidersTokenBusy, ProvidersTokenReady } from "../services/providersToken.js"
+import { ws, WsAuthenticationFail, WsClose, WsOpen } from "../services/wsManager.js"
 
 const ReconnectTimeout = 1000
+let currentProvider = null
+let currentToken = null
+
+export async function initAuthentication() {
+
+    if (automaticConnection()) return
+
+    return new Promise((resolve) => {
+        const disposeLoadingState = initLoadingState()
+
+        function onAuthenticationFail() {
+            if (ws.state === WsAuthenticationFail) {
+                providersToken.clearLocalStorage()
+                location.reload()
+            }
+        }
+        ws.onState.add(onAuthenticationFail)
+
+        function onSuccess() {
+            if (ws.state === WsOpen) {
+                ws.onState.remove(onSuccess)
+                component.dispose()
+                disposeLoadingState()
+                initReconnect()
+                resolve()
+            }
+        }
+        ws.onState.add(onSuccess)
+
+        getComponent().display()
+    })
+}
+
+function automaticConnection() {
+    const providerToken = providersToken.getFirstLocalStorageToken()
+    if (providerToken) {
+        currentProvider = providerToken.provider
+        currentToken = providerToken.token
+        ws.connect(currentProvider, currentToken)
+        return true
+    }
+    return false
+}
+
+function initLoadingState() {
+    function updateModalAuth() {
+        if (ws.state !== WsClose || providersToken.state === ProvidersTokenBusy)
+            document.body.style.filter = 'grayscale(0.8)'
+        else document.body.style.filter = 'grayscale(0)'
+    }
+    ws.onState.add(updateModalAuth)
+    providersToken.onState.add(updateModalAuth)
+
+    return () => {
+        ws.onState.remove(updateModalAuth)
+        providersToken.onState.remove(updateModalAuth)
+    }
+}
+
+function initReconnect() {
+    function reconnect() {
+        if (ws.state === WsClose) {
+            setTimeout(() => {
+                ws.connect(currentProvider, currentToken)
+            }, ReconnectTimeout)
+        }
+    }
+    ws.onState.add(reconnect)
+}
 
 function createView() {
     const twitchButton = button({
@@ -22,8 +89,6 @@ function createView() {
         style: { backgroundColor: 'hsl(0, 100%, 60%)' }
     })
 
-    const stayConnectedInput = inputCheckbox('stay connected')
-
     const container = div({
         style: {
             display: 'flex',
@@ -37,34 +102,26 @@ function createView() {
     }, [
         twitchButton,
         discordButton,
-        googleButton,
-        stayConnectedInput.view,
+        googleButton
     ])
 
     return {
         container,
         twitchButton: twitchButton.element,
         discordButton: discordButton.element,
-        googleButton: googleButton.element,
-        stayConnectedInput,
+        googleButton: googleButton.element
     }
 }
 
-let component
+let component = null
 function getComponent() {
     if (component) return component
     const view = createView()
     const {
         twitchButton,
         discordButton,
-        googleButton,
-        stayConnectedInput,
+        googleButton
     } = view
-
-    stayConnectedInput.input.checked = localStorage.getItem(LocalStorageStayConnected) === '1'
-    stayConnectedInput.input.addEventListener('change', () => {
-        localStorage.setItem(LocalStorageStayConnected, stayConnectedInput.input.checked ? '1' : '0')
-    })
 
     function disableAll() {
         twitchButton.disabled = true
@@ -114,8 +171,6 @@ function getComponent() {
         component = null
     }
 
-
-
     component = {
         display() {
             document.body.appendChild(view.container.element)
@@ -123,61 +178,4 @@ function getComponent() {
         dispose,
     }
     return component
-}
-
-let currentProvider = null
-let currentToken = null
-
-export async function initAuthentication() {
-    return new Promise((resolve) => {
-        function updateModalAuth() {
-            if (ws.state !== WsClose || providersToken.state === ProvidersTokenBusy)
-                document.body.style.filter = 'grayscale(0.8)'
-            else document.body.style.filter = 'grayscale(0)'
-        }
-        ws.onState.add(updateModalAuth)
-        providersToken.onState.add(updateModalAuth)
-
-        function onAuthenticationFail() {
-            if (ws.state === WsAuthenticationFail) {
-                providersToken.clearLocalStorage()
-                location.reload()
-            }
-        }
-        ws.onState.add(onAuthenticationFail)
-
-        function onSuccess() {
-            if (ws.state === WsOpen) {
-                ws.onState.remove(onSuccess)
-                ws.onState.remove(updateModalAuth)
-                providersToken.onState.remove(updateModalAuth)
-                component.dispose()
-
-                function reconnect() {
-                    if (ws.state === WsClose) {
-                        setTimeout(() => {
-                            ws.connect(currentProvider, currentToken)
-                        }, ReconnectTimeout)
-                    }
-                }
-                ws.onState.add(reconnect)
-
-                resolve()
-            }
-        }
-        ws.onState.add(onSuccess)
-
-        const stayConnected = localStorage.getItem(LocalStorageStayConnected)
-        if (stayConnected === '1') {
-            const providerToken = providersToken.getFirstLocalStorageToken()
-            if (providerToken) {
-                currentProvider = providerToken.provider
-                currentToken = providerToken.token
-                ws.connect(currentProvider, currentToken)
-                return
-            }
-        }
-
-        getComponent().display()
-    })
 }

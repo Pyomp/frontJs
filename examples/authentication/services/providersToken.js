@@ -3,11 +3,11 @@ import {
     LocalStorageGoogleToken,
     LocalStorageStateOnceToken,
     LocalStorageTwitchToken
-} from '../constants/localstorage.js'
+} from '../../constants/localstorage.js'
 
-import { nonce, parseHash } from '../../models/utils.js'
-import { EventSet } from '../../models/Events.js'
-const redirect = `${window.location.origin}/examples/communication/authRedirect.html`
+import { nonce, parseHash } from '../../../models/utils.js'
+import { EventSet } from '../../../models/Events.js'
+const redirect = new URL('authRedirect.html', import.meta.url).href
 
 const twitchClientId = `tywvxcigayfhk02zlbz8ijyy01ypve`
 const discordClientId = `http${location.host === 'localhost' ? '' : 's'}://${location.host}/discord/`
@@ -22,6 +22,7 @@ function setState(a) {
     state = a
     onState.emit()
 }
+
 function checkBusy() {
     if (state === ProvidersTokenBusy)
         throw new Error('getProvider is busy, check isBusy before call another getProvider')
@@ -92,7 +93,7 @@ async function getTwitchToken() {
         return hash.access_token
     }
 
-    return null
+    return
 }
 
 async function getDiscordToken() {
@@ -115,7 +116,7 @@ async function getDiscordToken() {
         return hash.access_token
     }
 
-    return null
+    return
 }
 
 async function getGoogleToken() {
@@ -123,7 +124,7 @@ async function getGoogleToken() {
 
     const localStorageToken = localStorage.getItem(LocalStorageGoogleToken)
     if (localStorageToken) return localStorageToken
-
+    console.log(redirect)
     const url = `https://accounts.google.com/o/oauth2/v2/auth` +
         `?scope=openid` +
         `&response_type=token` +

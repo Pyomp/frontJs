@@ -10,6 +10,14 @@ export const isMobile = ((a) => {
 const mqStandAlone = '(display-mode: standalone)'
 export const isPwa = navigator.standalone || window.matchMedia(mqStandAlone).matches
 
-
-
-
+let isVisible = document.visibilityState === 'visible'
+let onVisibility = new Set()
+function onVisibilityChange() {
+    isVisible = document.visibilityState === 'visible'
+    for (const fn of onVisibility) fn()
+}
+addEventListener('visibilitychange', onVisibilityChange)
+export const browserInfo = {
+    get isVisible() { return isVisible },
+    onVisibility
+}

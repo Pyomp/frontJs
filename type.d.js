@@ -1,7 +1,7 @@
 /**
  * @typedef {import('./communication/server/Client.js').Client} Client
  * @typedef {import('./communication/server/ClientGroup.js').ClientGroup} ClientGroup
- * @typedef {import('./examples/communication/wsManager.js').WebSocketClientManager} WebSocketClientManager
+ * @typedef {import('./examples/communication/services/wsManager.js').WebSocketClientManager} WebSocketClientManager
  * @typedef {import('./communication/server/WebSocketServerManager.js').WebSocketServerManager} WebSocketServerManager
  * @typedef {import('./communication/server/databaseFacades/BetterSqlite3.js').BetterSqlite3} BetterSqlite3
  * @typedef {import('./communication/server/DatabaseClients.js').DatabaseClients} DatabaseClients

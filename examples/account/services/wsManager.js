@@ -1,4 +1,4 @@
-import { EventSet } from "../../models/Events.js"
+import { EventSet } from "../../../models/Events.js"
 
 const serverUrl = `ws://localhost/ws`
 const OpenTimeout = 10_000
