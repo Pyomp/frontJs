@@ -4,7 +4,7 @@ import { Matrix3 } from '../../math/Matrix3.js'
 import { Matrix4 } from '../../math/Matrix4.js'
 import { Quaternion } from '../../math/Quaternion.js'
 import { Vector3 } from '../../math/Vector3.js'
-import { EventSet } from '../../common/EventDispatcher.js'
+import { EventSet } from '../../models/Events.js'
 
 export class Node3D {
     static defaultScene
@@ -37,8 +37,6 @@ export class Node3D {
         objects = [],
         parent,
     } = {}) {
-        super()
-
         this.name = name
         this.parent = parent === undefined ? Node3D.defaultScene : parent
 

@@ -1,6 +1,4 @@
-import { EventDispatcher } from '../../../../modules/common/EventDispatcher.js'; 
-
-export class KeyCodeAppData extends EventDispatcher {
+export class KeyCodeAppData {
     #up = '0KeyW'
     get up() { return this.#up }
     set up(a) { if (this.#up !== a && a?.constructor === String && a.length > 1) { this.#up = a; this.emit('up') } }

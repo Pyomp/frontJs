@@ -1,6 +1,6 @@
 import { PI2 } from '../../math/MathUtils.js'
-import { EventChange } from '../../modules/common/Events.js'
 import { Vector3 } from '../../math/Vector3.js'
+import { EventSet } from '../../models/Events.js'
 import { isMobile } from '../../modules/dom/browserInfo.js'
 
 const MinPolarAngle = 0.1
@@ -9,19 +9,20 @@ const MinDistCam = 1
 const MaxDistCam = 10
 const MinDistCamToGround = 0
 
-export class ThirdControls extends EventTarget {
+export class ThirdControls{
     #offsetY = 0.1
+    onOffsetY = new EventSet()
     get offsetY() { return this.#offsetY }
     set offsetY(a) {
         if (this.#offsetY !== a
             && Number.isFinite(a)
         ) {
             this.#offsetY = a
-            this.dispatchEvent(EventChange)
+            this.onOffsetY.emit()
         }
     }
 
-    onSensitivity = new Set()
+    onSensitivity = new EventSet()
     #sensitivity = 4
     get sensitivity() { return this.#sensitivity }
     set sensitivity(a) {
@@ -30,7 +31,7 @@ export class ThirdControls extends EventTarget {
             && a >= 1
         ) {
             this.#sensitivity = a
-            this.dispatchEvent(EventChange)
+            this.onSensitivity.emit()
         }
     }
 

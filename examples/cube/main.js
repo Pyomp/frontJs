@@ -1,4 +1,4 @@
-import { LoopRaf } from '../../modules/common/LoopRaf.js'
+import { LoopRaf } from '../../models/LoopRaf.js'
 import { GlbLoader } from '../../webGlEngine/gltfLoader/GlbLoader.js'
 import { StaticGltfNode } from '../../webGlEngine/nodes/StaticGltfNode.js'
 import { Renderer } from '../../webGlEngine/renderer/Renderer.js'

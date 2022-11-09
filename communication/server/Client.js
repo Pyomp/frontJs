@@ -1,4 +1,4 @@
-import { EventSet } from '../../common/EventDispatcher.js'
+import { EventSet } from "../../models/Events.js" 
 
 const DisposeTimeout = 5 * 60 * 1000
 

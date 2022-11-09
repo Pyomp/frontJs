@@ -1,37 +1,28 @@
-import { EventDispatcher, EventSet } from '../../common/EventDispatcher.js'
 import { repeatClick } from '../../dom/eventUtils.js'
-import { View } from '../../dom/View.js'
+import { button, div, p, span } from '../../dom/View.js'
 import { SkinView } from '../../webGlEngine/debug/components/SkinView.js'
 import { Blader3D } from './Blader3D.js'
 
+export class InterfaceView {
 
+    #createButton = button({ ref: 'createButton', i18n: 'create' })
+    #minusButton = button({ ref: 'minusButton', textContent: ' - ' })
+    #indexSpan = span({ ref: 'currentBladerIndex', textContent: '-1' })
+    #plusButton = button({ ref: 'plusButton', textContent: ' + ' })
+    #toggleDebug = button({ ref: 'toggleDebug', i18n: 'Debug' })
 
-export class InterfaceView extends EventDispatcher {
-    #view = new View('div', {
+    #view = div({
         style: { padding: '10px' },
-        children: [
-            new View('p', { i18n: 'You can create Character and take control of one with "-" "+"' }),
-            new View('div', {
-                children: [
-                    new View('button', { ref: 'createButton', i18n: 'create' }),
-                    new View('button', { ref: 'minusButton', textContent: ' - ' }),
-                    new View('span', { ref: 'currentBladerIndex', textContent: '-1' }),
-                    new View('button', { ref: 'plusButton', textContent: ' + ' }),
-                ]
-            }),
-            new View('p', {
-                i18n: 'Arrow Up / Down / Left / Right to move the selectionned Blader.'
-            }),
-            new View('button', { ref: 'toggleDebug', i18n: 'Debug' })
-        ]
-    })
+    }, [
+        p({ i18n: 'You can create Character and take control of one with "-" "+"' }),
+        div({}, [
+            this.#createButton, this.#minusButton, this.#indexSpan, this.#plusButton,
+        ]),
+        p({ i18n: 'Arrow Up / Down / Left / Right to move the selectionned Blader.' }),
+        this. #toggleDebug
+    ])
 
     container = this.#view.element
-    #createButton = this.#view.ref['createButton']
-    #minusButton = this.#view.ref['minusButton']
-    #indexSpan = this.#view.ref['currentBladerIndex']
-    #plusButton = this.#view.ref['plusButton']
-    #toggleDebug = this.#view.ref['toggleDebug']
 
     #skinningDebug = new SkinView()
 
@@ -49,8 +40,6 @@ export class InterfaceView extends EventDispatcher {
     }
 
     constructor(parent, scene, updates, keyboardInput, orbitControls) {
-        super()
-
         this.#scene = scene
         this.#updates = updates
         this.#keyboardInput = keyboardInput
@@ -58,21 +47,21 @@ export class InterfaceView extends EventDispatcher {
 
         parent.appendChild(this.container)
 
-        repeatClick(this.#createButton, this.#createBlader.bind(this))
+        repeatClick(this.#createButton.element, this.#createBlader.bind(this))
 
-        this.#minusButton.addEventListener('click', () => {
+        this.#minusButton.element.addEventListener('click', () => {
             if (this.#bladers[this.#currentBladerIndex - 1])
                 this.currentBladerIndex -= 1
         })
 
-        this.#plusButton.addEventListener('click', () => {
+        this.#plusButton.element.addEventListener('click', () => {
             if (this.#bladers[this.#currentBladerIndex + 1])
                 this.currentBladerIndex += 1
         })
 
         updates.add(this.#updateDebugBound)
 
-        this.#toggleDebug.addEventListener('click', () => {
+        this.#toggleDebug.element.addEventListener('click', () => {
             if (this.#skinningDebug.isDisplayed()) {
                 this.#skinningDebug.element.remove()
             } else {

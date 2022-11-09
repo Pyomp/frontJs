@@ -1,6 +1,6 @@
 import { InputManagerComputer } from '../../../gameEngine/input/InputManagerComputer.js'
 import { ReconciliationMotion } from '../../../gameEngine/physics/ReconciliationMotion.js'
-import { LoopRaf } from '../../../modules/common/LoopRaf.js'
+import { LoopRaf } from '../../../models/LoopRaf.js'
 import { ClientProvidersTokenManager } from '../../../modules/communication/client/providerAuthentication/ClientProviderTokenManager.js'
 import { WebSocketClientManager } from '../../../modules/communication/client/WebSocketClientManager.js'
 import { isMobile } from '../../../modules/dom/browserInfo.js'

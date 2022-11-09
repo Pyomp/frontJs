@@ -1,4 +1,4 @@
-import { LoopRaf } from '../../modules/common/LoopRaf.js'
+import { LoopRaf } from '../../models/LoopRaf.js'
 import { Test } from '../../modules/test/Test.js'
 import { PointLight } from '../../webGlEngine/renderer/modules/PointLights.js'
 import { Renderer } from '../../webGlEngine/renderer/Renderer.js'

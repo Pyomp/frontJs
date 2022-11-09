@@ -1,16 +1,16 @@
-import { EventChange } from '../../../modules/common/Events.js'
+import { EventSet } from "../../../models/Events.js"
 
 const TUTO_POINTER_LOCK = 1
 
-export class Progress extends EventTarget {
+export class Progress {
     #binary = 0
-
+    onTutoPointerLock = new EventSet()
     get tutoPointerLock() { return (this.#binary & TUTO_POINTER_LOCK) !== 0 }
     set tutoPointerLock(a) {
         if (a === this.tutoPointerLock) return
         if (a) { this.#binary |= TUTO_POINTER_LOCK }
         else { this.#binary &= ~TUTO_POINTER_LOCK }
-        this.dispatchEvent(EventChange)
+        this.onTutoPointerLock.emit()
     }
 
     toArray() {

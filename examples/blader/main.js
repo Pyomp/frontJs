@@ -9,9 +9,8 @@ import { Blader3D } from './Blader3D.js'
 import { Input } from './Input.js'
 import { InterfaceView } from './Interface.view.js'
 import { Points } from './Points.js'
-import { LoopRaf } from '../../common/LoopRaf.js'
+import { LoopRaf } from '../../models/LoopRaf.js'
 import { MainDebugView } from '../../webGlEngine/debug/CommonDebugView.js'
-import { SkinView } from '../../webGlEngine/debug/components/SkinView.js'
 import { PointLight } from '../../webGlEngine/renderer/modules/PointLights.js'
 
 /** asset init */

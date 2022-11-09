@@ -1,7 +1,6 @@
 import { Renderer } from '../../webGlEngine/renderer/Renderer.js'
 import { OrbitControls } from '../../webGlEngine/utils/OrbitControls.js'
-import { SplattingMesh } from '../../webGlEngine/nodes/objects/SplattingMesh.js'
-import { LoopRaf } from '../../modules/common/LoopRaf.js'
+import { LoopRaf } from '../../models/LoopRaf.js'
 import { MainDebugView } from '../../webGlEngine/debug/CommonDebugView.js'
 import { Terrain3D } from './TerrainNode.js'
 import { MoveHelper } from '../../webGlEngine/helpers/MoveHelper.js'

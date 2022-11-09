@@ -1,10 +1,10 @@
-import { EventDispose } from '../../../../modules/common/Events.js'
+import { EventSet } from '../../../../models/Events.js'
 import { Battle } from './models/Battle.js'
 import { Customization } from './models/Customization.js'
 import { Motion } from './models/Motion.js'
 import { State } from './models/State.js'
 
-export class Player extends EventTarget {
+export class Player {
 
     #id = -1
     get id() { return this.#id }
@@ -27,8 +27,9 @@ export class Player extends EventTarget {
         this.id = id
     }
 
+    onDispose = new EventSet()
     dispose(){
-        this.dispatchEvent(EventDispose)
+        this.onDispose.emit()
     }
 
     toArray() {

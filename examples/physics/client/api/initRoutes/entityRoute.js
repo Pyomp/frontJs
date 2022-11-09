@@ -1,4 +1,4 @@
-import { CMD_ENTITY } from '../../../common/constant/websocketCommand.js'
+import { CMD_ENTITY } from '../../../common/constant/websocketCommand.js' 
 import { EntityFrame } from '../../../common/websocketFrame/entityFrame.js'
 import { appData } from '../../global.js'
 

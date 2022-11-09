@@ -1,5 +1,5 @@
-import { ArrayUtils } from '../common/arrayUtils.js'
-import { LoopRaf } from '../common/LoopRaf.js'
+import { ArrayUtils } from '../models/arrayUtils.js'
+import { LoopRaf } from '../models/LoopRaf.js'
 
 const isNodeJs = typeof window === 'undefined'
 

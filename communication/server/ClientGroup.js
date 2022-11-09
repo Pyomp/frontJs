@@ -1,4 +1,4 @@
-import { EventSet } from '../../common/EventDispatcher.js'
+import { EventSet } from '../../models/EventDispatcher.js'
 
 export class ClientGroup {
 

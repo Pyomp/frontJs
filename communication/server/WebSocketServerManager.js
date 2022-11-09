@@ -1,4 +1,4 @@
-import { wait } from '../../common/utils.js'
+import { wait } from '../../models/utils.js'
 import { authProviders } from './authProvider/authProviders.js'
 import { Client } from './Client.js'
 import { ClientGroup } from './ClientGroup.js'

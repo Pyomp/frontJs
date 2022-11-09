@@ -1,4 +1,3 @@
-import { fetch } from '../../../common/utils.node.js'
 import { twitchClientId } from '../../config.js'
 
 export async function getTwitchId(oauthToken) {

@@ -1,5 +1,3 @@
-import { fetch } from '../../../common/utils.node.js'
-
 export async function getDiscordId(oauthToken) {
     const options = {
         hostname: 'discordapp.com',

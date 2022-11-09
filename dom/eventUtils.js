@@ -1,6 +1,3 @@
-
-
-
 export const onFirstInteraction = new Set()
 addEventListener('pointerdown', () => {
     for (const callback of onFirstInteraction) callback()
