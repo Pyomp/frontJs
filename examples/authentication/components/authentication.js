@@ -9,10 +9,15 @@ export async function initAuthentication() {
     return createComponent()
 }
 
-function automaticConnection() {
+async function automaticConnection() {
     const providerToken = providersToken.getFirstLocalStorageToken()
     if (providerToken) {
-        return fetchAuthentication(providerToken.provider, providerToken.token)
+        const serversState = await fetchAuthentication(providerToken.provider, providerToken.token)
+        return ({
+            provider: providerToken.provider,
+            token: providerToken.token,
+            serversState
+        })
     }
 }
 
@@ -22,7 +27,6 @@ async function fetchAuthentication(provider, token) {
         return res
     } else {
         providersToken.clearLocalStorage()
-        
     }
 }
 
@@ -92,10 +96,14 @@ function createComponent() {
             disableAll()
             const token = await getTokenFunction()
             if (token) {
-                const data = await fetchAuthentication(providerName, token)
-                if (data) {
+                const serversState = await fetchAuthentication(providerName, token)
+                if (serversState) {
                     container.dispose()
-                    resolve(data)
+                    resolve({
+                        provider: providerName,
+                        token: token,
+                        serversState
+                    })
                     return
                 }
             }

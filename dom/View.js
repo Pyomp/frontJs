@@ -223,3 +223,38 @@ export function p({
     return new View('p', arguments[0], children)
 }
 
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
+export function select({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('select', arguments[0], children)
+}
+
+/**
+ * @param {ViewParam} param0 
+ * @param {View[]} children 
+ * @returns 
+ */
+export function option({
+    ref = '',
+    style = {},
+    parent,
+    classList = [],
+    shadowStyle = ``,
+    i18n = '',
+    textContent = '',
+    attributes = {}
+}, children = []) {
+    return new View('option', arguments[0], children)
+}

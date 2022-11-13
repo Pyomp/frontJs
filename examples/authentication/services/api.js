@@ -1,4 +1,3 @@
-import { notification } from "../../../dom/components/notification.js"
 import { env } from "../../../env.js"
 
 export const api = {
