@@ -12,7 +12,9 @@ export class Tap {
     #clone = model.cloneNode()
 
     constructor() {
-        document.body.appendChild(this.#clone)
+        requestAnimationFrame(() => {
+            document.body.appendChild(this.#clone)
+        })
     }
 
     dispose() { this.#clone.remove() }
