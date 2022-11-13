@@ -4,7 +4,7 @@ import { ws } from "./services/ws.js"
 
 export function initGame() {
     document.addEventListener('pointerdown', (event) => {
-        ws.send(1, { x: event.clientX, y: event.clientY })
+        ws.send(1, { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight })
     })
 
     const entities = {}
@@ -42,8 +42,8 @@ export function initGame() {
 
             const entity = entities[id]
             entity.lastUpdate = loop.dateNowSecond
-            entity.x = x
-            entity.y = y
+            entity.x = x * window.innerWidth
+            entity.y = y * window.innerHeight
             entity.time = time
         }
     })

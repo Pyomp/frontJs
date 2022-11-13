@@ -57,8 +57,8 @@ function createView() {
             height: '100%'
         }
     }, [
-        twitchButton,
-        discordButton,
+        // twitchButton,
+        // discordButton,
         googleButton
     ])
 
