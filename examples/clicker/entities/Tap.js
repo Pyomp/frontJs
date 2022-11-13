@@ -3,7 +3,8 @@ model.style.background = 'radial-gradient(hsla(30, 100%, 60%, 0) 20%, hsla(10, 1
 model.style.position = 'fixed'
 model.style.width = '100px'
 model.style.height = '100px'
-model.style.opacity = 0.5
+model.style.opacity = 0
+model.style.transform = `scale(0)`
 model.style.transitionProperty = 'transform, opacity'
 model.style.transitionDuration = '0.02s, 0.02s'
 
