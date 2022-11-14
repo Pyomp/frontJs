@@ -12,8 +12,8 @@ const STROKE_COLOR = '#000'
 const STROKE_SIZE = 1
 
 const s = model.style
-s.fontWeight = '900'
-s.fontSize = 'larger'
+s.fontWeight = '600'
+s.fontSize = 'large'
 s.wordBreak = 'break-all'
 s.maxWidth = '350px'
 s.pointerEvents = 'none'
@@ -68,7 +68,6 @@ export const notification = {
             if (clone.style.opacity !== '0') {
                 clone.style.bottom = `${+clone.style.bottom.slice(0, -2) + clone.scrollHeight}px`
                 clone.style.opacity = '0'
-                const FADE_OUT = 1
             }
         }, TIME_ALIVE)
 

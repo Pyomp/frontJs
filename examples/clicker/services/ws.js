@@ -78,6 +78,7 @@ export const ws = {
         })
 
         websocket.addEventListener('close', () => {
+            logger.system.push('Connection fail.')
             isAuthenticated = false
             setStatus(this.CLOSE)
             setTimeout(() => { this.connect() }, 1000)

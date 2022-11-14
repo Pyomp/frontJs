@@ -17,8 +17,8 @@ class Logger {
 }
 
 export const logger = {
-    system: new Logger({ color: 'hsl(0, 60%, 100%)' }),
-    info: new Logger({ color: 'hsl(300, 60%, 100%)' }),
-    debug: new Logger({ color: 'hsl(120, 60%, 100%)' }),
-    warn: new Logger({ color: 'hsl(60, 60%, 100%)' }),
+    system: new Logger({ color: 'hsl(200, 100%, 70%)' }),
+    info: new Logger({ color: 'hsl(300, 70%, 100%)' }),
+    debug: new Logger({ color: 'hsl(120, 100%, 70%)' }),
+    warn: new Logger({ color: 'hsl(60, 100%, 70%)' }),
 }

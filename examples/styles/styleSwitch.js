@@ -151,7 +151,6 @@ textarea:focus {
 }
 
 button {
-    width: calc(100% - var(--padding-button) * 2);
     cursor: pointer;
 
     padding: 5px;

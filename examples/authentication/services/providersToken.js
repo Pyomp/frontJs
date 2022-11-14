@@ -124,7 +124,7 @@ async function getGoogleToken() {
 
     const localStorageToken = localStorage.getItem(LocalStorageGoogleToken)
     if (localStorageToken) return localStorageToken
-    console.log(redirect)
+
     const url = `https://accounts.google.com/o/oauth2/v2/auth` +
         `?scope=openid` +
         `&response_type=token` +
