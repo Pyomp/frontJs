@@ -28,6 +28,8 @@ s.textShadow = `-1px -1px ${STROKE_SIZE}px ${STROKE_COLOR},
 s.position = 'fixed'
 s.zIndex = '888'
 s.transition = `opacity ${FADE}s, bottom ${FADE}s`
+s.pointerEvents = 'none'
+s.userSelect = 'none'
 
 let baseBottom = 0
 function computeBaseBottom() {

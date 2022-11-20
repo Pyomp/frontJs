@@ -11,7 +11,7 @@ export async function initAuthentication() {
 
 async function automaticConnection() {
     const providerToken = providersToken.getFirstLocalStorageToken()
-    console.log(providerToken)
+
     if (providerToken) {
         const serversState = await fetchAuthentication(providerToken.provider, providerToken.token)
         if (serversState) {
@@ -40,13 +40,18 @@ function createView() {
     })
 
     const discordButton = button({
-        ref: 'discord', textContent: 'Discord',
+        textContent: 'Discord',
         style: { backgroundColor: 'rgb(94, 160, 255)', width: '100%' }
     })
 
     const googleButton = button({
-        ref: 'google', textContent: 'Google',
+        textContent: 'Google',
         style: { backgroundColor: 'hsl(0, 100%, 60%)', width: '100%' }
+    })
+
+    const guestButton = button({
+        i18n: 'Guest',
+        style: { backgroundColor: 'hsl(0, 0%, 50%)', width: '100%' }
     })
 
     const container = div({
@@ -60,17 +65,19 @@ function createView() {
             height: '100%'
         }
     }, [
-        span({i18n: 'Log in', style:{fontSize: 'x-large'}}),
+        span({ i18n: 'Log in', style: { fontSize: 'x-large' } }),
         // twitchButton,
         // discordButton,
-        googleButton
+        googleButton,
+        guestButton
     ])
 
     return {
         container,
         twitchButton: twitchButton.element,
         discordButton: discordButton.element,
-        googleButton: googleButton.element
+        googleButton: googleButton.element,
+        guestButton: guestButton.element
     }
 }
 
@@ -80,19 +87,22 @@ function createComponent() {
         container,
         twitchButton,
         discordButton,
-        googleButton
+        googleButton,
+        guestButton
     } = view
 
     function disableAll() {
         twitchButton.disabled = true
         discordButton.disabled = true
         googleButton.disabled = true
+        guestButton.disabled = true
     }
 
     function enableAll() {
         twitchButton.disabled = false
         discordButton.disabled = false
         googleButton.disabled = false
+        guestButton.disabled = false
     }
 
     return new Promise((resolve) => {
@@ -123,6 +133,9 @@ function createComponent() {
         })
         googleButton.addEventListener('click', () => {
             onClickProviderButton('google', providersToken.getGoogleToken)
+        })
+        guestButton.addEventListener('click', () => {
+            onClickProviderButton('guest', providersToken.getGuestToken)
         })
 
         document.body.appendChild(view.container.element)

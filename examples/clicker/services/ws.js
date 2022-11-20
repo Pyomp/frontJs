@@ -1,5 +1,6 @@
 import { EventSet } from "../../../models/Events.js"
 import { logger } from "../../../services/logger/logger.js"
+import { providersToken } from "../../authentication/services/providersToken.js"
 
 let providerSaved
 let providerTokenSaved
@@ -29,20 +30,20 @@ export const ws = {
     AUTHENTICATING: 3,
 
     data: new DataView(new ArrayBuffer(0)),
-    dispatcher: {},
+    dispatcher: { [1]: (data) => { logger.info.push(`Clicks: ${data?.clickNumber}`) } },
 
     onStatus: new EventSet(),
     get status() { return status },
 
-    send(cmd, payload, id) {
+    send(cmd, data, id) {
         if (status !== this.READY) return
 
-        if (payload.constructor === ArrayBuffer) {
-            websocket.send(payload)
+        if (data.constructor === ArrayBuffer) {
+            websocket.send(data)
         } else {
             websocket.send(JSON.stringify({
                 cmd,
-                payload,
+                payload: data,
                 id
             }))
 
@@ -69,7 +70,7 @@ export const ws = {
                     if (json.id) {
                         requests[id](json.data)
                     } else {
-                        this.dispatcher[json.cmd]()
+                        this.dispatcher[json.cmd](json.data)
                     }
                 } catch (e) {
                     logger.warn.push(e)
@@ -77,11 +78,20 @@ export const ws = {
             }
         })
 
-        websocket.addEventListener('close', () => {
-            logger.system.push('Connection fail.')
+        websocket.addEventListener('close', (event) => {
             isAuthenticated = false
             setStatus(this.CLOSE)
-            setTimeout(() => { this.connect() }, 1000)
+            if (event.reason === 'new connection') {
+                logger.system.push('New Connection, game will be reload in 3s...')
+                setTimeout(() => { location.reload() }, 3000)
+            } else if (event.reason === 'authentication fail') {
+                providersToken.clearLocalStorage()
+                logger.system.push('Authentication fail, game will be reload in 3s...')
+                setTimeout(() => { location.reload() }, 3000)
+            } else {
+                logger.system.push('Connection fail.')
+                setTimeout(() => { this.connect() }, 1000)
+            }
         })
 
         websocket.addEventListener('open', () => {
@@ -90,7 +100,7 @@ export const ws = {
             const closeTimeout = setTimeout(() => { websocket.close(); location.reload() }, 20_000)
             setStatus(this.AUTHENTICATING)
 
-            websocket.send(JSON.stringify({ provider: providerSaved, token: providerToken }))
+            websocket.send(JSON.stringify({ provider: providerSaved, token: providerTokenSaved }))
 
             websocket.addEventListener('message', () => {
                 clearTimeout(closeTimeout)

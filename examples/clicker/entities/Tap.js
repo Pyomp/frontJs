@@ -7,6 +7,8 @@ model.style.opacity = 0
 model.style.transform = `scale(0)`
 model.style.transitionProperty = 'transform, opacity'
 model.style.transitionDuration = '0.02s, 0.02s'
+model.style.pointerEvents = 'none'
+model.style.userSelect = 'none'
 
 export class Tap {
     #clone = model.cloneNode()

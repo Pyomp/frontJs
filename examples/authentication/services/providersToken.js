@@ -1,12 +1,13 @@
 import {
     LocalStorageDiscordToken,
     LocalStorageGoogleToken,
-    LocalStorageStateOnceToken,
-    LocalStorageTwitchToken
+    LocalStorageTwitchToken,
+    LocalStorageGuestToken
 } from '../../constants/localstorage.js'
 
 import { nonce, parseHash } from '../../../models/utils.js'
 import { EventSet } from '../../../models/Events.js'
+import { api } from './api.js'
 const redirect = new URL('authRedirect.html', import.meta.url).href
 
 const twitchClientId = `tywvxcigayfhk02zlbz8ijyy01ypve`
@@ -142,10 +143,25 @@ async function getGoogleToken() {
     return null
 }
 
+async function getGuestToken() {
+    checkBusy()
+
+    const localStorageToken = localStorage.getItem(LocalStorageGuestToken)
+    if (localStorageToken) return localStorageToken
+
+    const token = await api.getGuestToken()
+    if (!token) throw new Error("Cannot get Guest token")
+
+    localStorage.setItem(LocalStorageGuestToken, token)
+
+    return token
+}
+
 function clearLocalStorage() {
     localStorage.removeItem(LocalStorageTwitchToken)
     localStorage.removeItem(LocalStorageDiscordToken)
     localStorage.removeItem(LocalStorageGoogleToken)
+    localStorage.removeItem(LocalStorageGuestToken)
 }
 
 function getFirstLocalStorageToken() {
@@ -161,10 +177,13 @@ function getFirstLocalStorageToken() {
     return null
 }
 
+
+
 export const providersToken = {
     get state() { return state },
     onState,
 
+    getGuestToken,
     getTwitchToken,
     getDiscordToken,
     getGoogleToken,
