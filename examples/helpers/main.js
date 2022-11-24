@@ -1,5 +1,5 @@
 import { Vector3 } from '../../math/Vector3.js'
-import { LoopRaf } from '../../modules/common/LoopRaf.js'
+import { LoopRaf } from '../../models/LoopRaf.js' 
 import { MoveHelper } from '../../webGlEngine/helpers/MoveHelper.js' 
 import { Renderer } from '../../webGlEngine/renderer/Renderer.js'
 import { OrbitControls } from '../../webGlEngine/utils/OrbitControls.js'

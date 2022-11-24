@@ -40,8 +40,11 @@ const modifierStr = {
 
 const codeToText = (code) => {
     if (code === '') return ''
+
     let str = modifierStr[code[0]]
+
     const name = getKey(code.slice(1))
+    
     if (name === ' ') { str += 'Space' }
     else str += name
     return str

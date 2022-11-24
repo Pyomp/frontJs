@@ -1,10 +1,15 @@
-import { serviceLoop } from "../../services/serviceLoop.js"
-import { Tap } from "./entities/Tap.js"
-import { serviceWebsocket } from "../../services/serviceWebsocket.js"
+import { serviceLoop } from "../services/serviceLoop.js"
+import { Blader3D } from "./entities/blader/Blader3D.js" 
+import { Tap } from "./entities/Tap.js.js"
+import { ws } from "./services/ws.js.js"
 
-export function initGame() {
+export async function initGame() {
+    /** asset init */
+    await Promise.all([
+        Blader3D.init(),
+    ])
     document.addEventListener('pointerdown', (event) => {
-        serviceWebsocket.send(1, { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight })
+        ws.send(1, { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight })
     })
 
     const entities = {}
@@ -19,21 +24,21 @@ export function initGame() {
     }, 50)
 
     serviceLoop.addUpdate(() => {
-        let cursor = serviceWebsocket.dataView.byteOffset
-        const bufferLength = serviceWebsocket.dataView.buffer.byteLength
+        let cursor = ws.data.byteOffset
+        const bufferLength = ws.data.buffer.byteLength
 
         while (cursor < bufferLength) {
-            const family = serviceWebsocket.dataView.getUint16(cursor, true)
+            const family = ws.data.getUint16(cursor, true)
             cursor += 2
-            const state = serviceWebsocket.dataView.getUint8(cursor, true)
+            const state = ws.data.getUint8(cursor, true)
             cursor += 2
-            const id = serviceWebsocket.dataView.getUint32(cursor, true)
+            const id = ws.data.getUint32(cursor, true)
             cursor += 4
-            const x = serviceWebsocket.dataView.getFloat32(cursor, true)
+            const x = ws.data.getFloat32(cursor, true)
             cursor += 4
-            const y = serviceWebsocket.dataView.getFloat32(cursor, true)
+            const y = ws.data.getFloat32(cursor, true)
             cursor += 4
-            const time = serviceWebsocket.dataView.getFloat32(cursor, true)
+            const time = ws.data.getFloat32(cursor, true)
             cursor += 4
 
             if (!entities[id]) {
