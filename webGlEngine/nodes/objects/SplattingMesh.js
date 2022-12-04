@@ -65,12 +65,13 @@ const shader = new Shader(
                 texture(u_map3, v_uv * u_map3Scale) * splatting.b;
                     
         color.a = 1.0;
-        // color = vec4(1.0, 0.0, 0.0, 1.0);
+        
         // color = mix(color, texture(u_mapColor, v_uv).rgb, 0.5);
 
         vec3 normal = normalize(v_normal);
 
         ${renderer.lights.fs_main()}
+        // color = vec4(1.0, 0.0, 0.0, 1.0);
     }
     `,
     () => 0
@@ -97,6 +98,10 @@ export class SplattingMesh extends Object3D {
             },
             count: count
         })
+    }
+
+    draw(gl) {
+        gl.drawElements(gl.TRIANGLES, this.count, gl.UNSIGNED_SHORT, 0)
     }
 }
 

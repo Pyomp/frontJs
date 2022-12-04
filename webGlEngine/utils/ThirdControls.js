@@ -1,7 +1,7 @@
 import { PI2 } from '../../math/MathUtils.js'
 import { Vector3 } from '../../math/Vector3.js'
 import { EventSet } from '../../models/Events.js'
-import { isMobile } from '../../modules/dom/browserInfo.js'
+import { isMobile } from '../../dom/browserInfo.js' 
 
 const MinPolarAngle = 0.1
 const MaxPolarAngle = 3
@@ -64,7 +64,6 @@ export class ThirdControls{
         onBeforeRender,
         target,
     ) {
-        super()
         domElement.style.touchAction = 'none'
 
         const cameraPosition = camera.position

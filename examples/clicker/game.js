@@ -1,6 +1,6 @@
-import { serviceLoop } from "../../services/serviceLoop.js"
+import { serviceLoop } from "../../game/services/serviceLoop.js"
 import { Tap } from "./entities/Tap.js"
-import { serviceWebsocket } from "../../services/serviceWebsocket.js"
+import { serviceWebsocket } from "../../game/services/serviceWebsocket.js"
 
 export function initGame() {
     document.addEventListener('pointerdown', (event) => {

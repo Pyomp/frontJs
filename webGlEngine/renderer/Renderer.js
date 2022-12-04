@@ -8,6 +8,7 @@ import { Vao } from './Vao.js'
 import { Frustum } from '../../math/Frustum.js'
 import { NoBlending } from './constants.js'
 import { Vector3 } from '../../math/Vector3.js'
+import { Box3 } from '../../math/Box3.js'
 
 const _vector3 = new Vector3()
 const groupToIndex = new Map()
@@ -28,6 +29,8 @@ function compareGroupBy(a, b) {
 
     return indexA - indexB
 }
+
+const box3 = new Box3()
 
 export class Renderer {
     /** @type {Map.<Texture, WebGLTexture>} */
@@ -197,7 +200,9 @@ export class Renderer {
         const objects = []
         this.scene.traverseObjects((object, node) => {
             const boundingBox = object.geometry.boundingBox
-            if (!boundingBox || this.#cameraFrustum.intersectsBox(boundingBox)) {
+
+            if (!boundingBox
+                ||this.#cameraFrustum.intersectsBox(box3.copy(boundingBox).translate(node.position))) {
                 objects.push(object)
             }
         })

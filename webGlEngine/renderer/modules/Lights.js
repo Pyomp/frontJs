@@ -1,12 +1,14 @@
+import { Color } from '../../../math/Color.js'
 import { Vector3 } from '../../../math/Vector3.js'
 import { UboLightsIndex, UboLightsName } from '../constants.js'
 import { Light } from './Light.js'
 import { PointLights } from './PointLights.js'
 
-
 class DirectionalLight extends Light {
-    direction = new Proxy(new Vector3(1, 1, 1), this.proxyHandler)
+    direction = new Vector3(1, 1, 1)
 }
+
+const color = new Color()
 
 export class Lights {
     #gl
@@ -51,6 +53,7 @@ export class Lights {
         })
 
         this.ambientLight.intensity = 0.05
+        this.ambientLight.needsUpdate = true
 
         this.#updateUboGlBuffer()
     }
@@ -78,14 +81,9 @@ export class Lights {
 
                 this.#needsUboGlBufferUpdate = true
 
-                if (light.visible === 1) {
-                    light.direction.toArray(this.#uboArray, 4 + i * 8)
-                    this.#uboArray[4 + i * 8 + 3] = 1
-                    light.color.toArray(this.#uboArray, 4 + i * 8 + 4)
-                    this.#uboArray[4 + i * 8 + 7] = light.intensity
-                } else {
-                    this.#uboArray[4 + i * 8 + 3] = 0
-                }
+                light.color.toArray(this.#uboArray, 4 + i * 8)
+                this.#uboArray[4 + i * 8 + 3] = light.intensity
+                light.direction.toArray(this.#uboArray, 4 + i * 8 + 4)
             }
         }
     }
@@ -93,8 +91,13 @@ export class Lights {
     #updateAmbientLightsUboArray() {
         if (this.ambientLight.needsUpdate) {
             this.ambientLight.needsUpdate = false
-            this.ambientLight.color.toArray(this.#uboArray)
-            this.#uboArray[3] = this.ambientLight.intensity
+            this.#needsUboGlBufferUpdate = true
+
+            color.copy(this.ambientLight.color)
+                .multiplyScalar(this.ambientLight.intensity)
+                .toArray(this.#uboArray)
+
+            this.#uboArray[3] = 1
         }
     }
 
@@ -117,23 +120,21 @@ export class Lights {
     fs_pars(object3D) {
         return `
         struct DirLight {
-            vec3 direction;
-            float visible;
-            vec3 diffuse;
+            vec3 color;
             float intensity;
+            vec3 direction;           
         };
         
         layout(std140) uniform ${UboLightsName} {
             vec4 ambient;
-            DirLight dirLights[${this.directionalLightMaxCount
-            }];
+            DirLight dirLights[${this.directionalLightMaxCount}];
         };
 
         void calcDirLights(vec3 v_normal, out vec3 diffuse){
             for (int i = 0; i < ${this.directionalLightMaxCount}; i++) {
-                if (dirLights[i].visible > 0.5) {
-                    diffuse += dirLights[i].intensity * dirLights[i].diffuse * (dot(v_normal, dirLights[i].direction) / 2. + .5);
-                }
+                diffuse += dirLights[i].intensity
+                    * dirLights[i].color
+                    * (dot(v_normal, -dirLights[i].direction) / 2. + .5);
             }
         }
 
@@ -142,13 +143,12 @@ export class Lights {
 
     fs_main() {
         return `
-        vec3 diffuse;
-        vec3 specular;
+        vec3 directionalDiffuse;
 
-        calcDirLights(normal, diffuse);
+        calcDirLights(normal, directionalDiffuse);
         ${this.pointLights.fs_main()}
 
-        color.rgb = (color.rgb * 0.9 + 0.1) * (diffuse + specular);
+        color.rgb = (color.rgb * 0.9 + 0.1) *  (ambient.rgb + directionalDiffuse + pointDiffuse + pointSpecular);
         
         // color.rgb = pow(color.rgb, vec3(1.0 / 2.2)); // color space ?
         `

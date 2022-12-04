@@ -4,7 +4,7 @@ import { Light } from './Light.js'
 
 export class PointLight extends Light {
     /** @type {Vector3} */
-    position = new Proxy(new Vector3(), this.proxyHandler)
+    position = new Vector3()
 
     #transitionFade = 1
     /** used in internal renderer */
@@ -103,20 +103,20 @@ export class PointLights {
         for (let i = 0; i < this.pointLightMaxCount; i++) {
             const light = this.#getLight(i, dt)
             if (light) {
-                if (light.needsUpdate) {
-                    light.needsUpdate = false
+                // if (light.needsUpdate) {
+                //     light.needsUpdate = false
 
-                    this.#needsUboGlBufferUpdate = true
+                this.#needsUboGlBufferUpdate = true
 
-                    if (light.visible === 1) {
-                        light.position.toArray(this.#uboArray, i * 8)
-                        this.#uboArray[i * 8 + 3] = 1
-                        light.color.toArray(this.#uboArray, i * 8 + 4)
-                        this.#uboArray[i * 8 + 7] = light.intensity * light.transitionFade
-                    } else {
-                        this.#uboArray[i * 8 + 3] = 0
-                    }
+                if (light.visible === 1) {
+                    light.position.toArray(this.#uboArray, i * 8)
+                    this.#uboArray[i * 8 + 3] = 1
+                    light.color.toArray(this.#uboArray, i * 8 + 4)
+                    this.#uboArray[i * 8 + 7] = light.intensity * light.transitionFade
+                } else {
+                    this.#uboArray[i * 8 + 3] = 0
                 }
+                // }
             } else {
                 this.#uboArray[i * 8 + 3] = 0
             }
@@ -249,7 +249,11 @@ export class PointLights {
         `}
 
     fs_main() {
-        return `calcPointLights(normal, diffuse, specular);`
+        return `
+        vec3 pointDiffuse;
+        vec3 pointSpecular;
+        calcPointLights(normal, pointDiffuse, pointSpecular);
+        `
     }
 }
 
