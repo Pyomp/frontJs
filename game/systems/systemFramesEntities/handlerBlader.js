@@ -21,7 +21,7 @@ export function frameHandlerBlader(view, offset) {
   cursor += 8
 
   const instance = Blader3D.instances[id] || new Blader3D(id)
-  if (id === storeSettings.id) service3D.controls.target = instance.node3dPosition
+  if (id == storeSettings.id) service3D.controls.target = instance.node3dPosition
 
   const position = instance.position
   position.x = view.getFloat32(cursor, true)
