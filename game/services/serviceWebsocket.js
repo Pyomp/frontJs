@@ -29,10 +29,11 @@ export const serviceWebsocket = {
     CONNECTING: 2,
     AUTHENTICATING: 3,
 
-    dataView: new DataView(new ArrayBuffer()),
+    view: new DataView(new ArrayBuffer()),
     lastDataViewUpdate: 0,
 
-    dispatcher: { [1]: (data) => { console.log(data) } },
+    jsonDispatcher: { [1]: (data) => { console.log(data) } },
+    binaryDispatcher: {},
 
     onStatus: new EventSet(),
     get status() { return status },
@@ -69,21 +70,32 @@ export const serviceWebsocket = {
 
         websocket.addEventListener('message', (event) => {
             const data = event.data
-
-            if (data.constructor === ArrayBuffer) {
-                this.lastDataViewUpdate = performance.now()
-                this.dataView = new DataView(data)
-            } else {
-                try {
+            try {
+                if (data.constructor === ArrayBuffer) {
+                    const view = new DataView(data)
+                    const isBufferFrame = view.getUint8(0, true) === 0
+                    if (isBufferFrame) {
+                        this.lastDataViewUpdate = performance.now()
+                        this.view = view
+                    } else {
+                        const totalLength = view.byteOffset + view.byteLength
+                        let cursor = view.byteOffset + 1
+                        while (cursor < totalLength) {
+                            const command = view.getUint16(cursor, true)
+                            cursor += 2
+                            cursor = this.binaryDispatcher[command]?.(view, cursor)
+                        }
+                    }
+                } else {
                     const json = JSON.parse(data)
                     if (json.id) {
                         requests[id](json.data)
                     } else {
-                        this.dispatcher[json.cmd](json.data)
+                        this.jsonDispatcher[json.cmd](json.data)
                     }
-                } catch (e) {
-                    serviceLogger.warn.push(e)
                 }
+            } catch (e) {
+                serviceLogger.warn.push(e)
             }
         })
 

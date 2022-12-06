@@ -72,8 +72,7 @@ export class Blader3D {
     #update3DBound = this.#update3D.bind(this)
     #update3D() {
         this.#updateNewUpdate()
-        if (this.velocity.x === 0 && this.velocity.y === 0 && this.velocity.z === 0) return
-
+        
         const elapsedTime = serviceLoop.perfNowSecond - this.lastFrameUpdate
         if (elapsedTime > 5) this.dispose()
 

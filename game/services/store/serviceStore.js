@@ -7,6 +7,6 @@ function onAuthentication(data) {
 
 export const serviceStore = {
     initWebsocket() {
-        serviceWebsocket.dispatcher[1] = onAuthentication
+        serviceWebsocket.jsonDispatcher[1] = onAuthentication
     }
 }

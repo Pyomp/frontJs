@@ -6,8 +6,8 @@ import { managerZones } from "../../zones/managerZones.js"
  */
 export function frameHandlerZone0(view, offset) {
   let cursor = offset
-  
-  managerZones.updateZone(2)
-
+  const zoneId = view.getUint16(cursor, true)
+  cursor += 2
+  managerZones.updateZone(zoneId)
   return cursor
 }

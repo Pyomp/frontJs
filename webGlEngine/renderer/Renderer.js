@@ -52,7 +52,7 @@ export class Renderer {
         this.#pointLightFadeTime = pointLightFadeTime
 
         this.canvas = document.createElement('canvas')
-        parent.appendChild(this.canvas)
+        parent.prepend(this.canvas)
         this.canvas.style.width = '100%'
         this.canvas.style.height = '100%'
         this.canvas.style.position = 'fixed'

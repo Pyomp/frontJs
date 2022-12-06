@@ -1,19 +1,20 @@
 import { Shortcut } from '../../models/Shortcut.js'
-
-export const ACTION_UP = 0
-export const ACTION_DOWN = 1
-export const ACTION_LEFT = 2
-export const ACTION_RIGHT = 3
-export const ACTION_INTERACT = 4
-export const ACTION_JUMP = 5
-export const ACTION_0 = 6
-export const ACTION_1 = 7
-export const ACTION_2 = 8
-export const ACTION_3 = 9
-export const ACTION_4 = 10
-export const ACTION_5 = 11
-export const ACTION_6 = 12
-export const ACTION_MENU = 13
+import {
+    ACTION_UP,
+    ACTION_DOWN,
+    ACTION_LEFT,
+    ACTION_RIGHT,
+    ACTION_INTERACT,
+    ACTION_JUMP,
+    ACTION_0,
+    ACTION_1,
+    ACTION_2,
+    ACTION_3,
+    ACTION_4,
+    ACTION_5,
+    ACTION_6,
+    ACTION_MENU,
+} from '../constants/constantsActions.js'
 
 export const storeShortcuts = {
     [ACTION_UP]: new Shortcut({ action: ACTION_UP, code: 'KeyW' }),

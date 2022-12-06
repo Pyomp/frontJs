@@ -19,21 +19,21 @@ export function initGame() {
     }, 50)
 
     serviceLoop.addUpdate(() => {
-        let cursor = serviceWebsocket.dataView.byteOffset
-        const bufferLength = serviceWebsocket.dataView.buffer.byteLength
+        let cursor = serviceWebsocket.view.byteOffset
+        const bufferLength = serviceWebsocket.view.buffer.byteLength
 
         while (cursor < bufferLength) {
-            const family = serviceWebsocket.dataView.getUint16(cursor, true)
+            const family = serviceWebsocket.view.getUint16(cursor, true)
             cursor += 2
-            const state = serviceWebsocket.dataView.getUint8(cursor, true)
+            const state = serviceWebsocket.view.getUint8(cursor, true)
             cursor += 2
-            const id = serviceWebsocket.dataView.getUint32(cursor, true)
+            const id = serviceWebsocket.view.getUint32(cursor, true)
             cursor += 4
-            const x = serviceWebsocket.dataView.getFloat32(cursor, true)
+            const x = serviceWebsocket.view.getFloat32(cursor, true)
             cursor += 4
-            const y = serviceWebsocket.dataView.getFloat32(cursor, true)
+            const y = serviceWebsocket.view.getFloat32(cursor, true)
             cursor += 4
-            const time = serviceWebsocket.dataView.getFloat32(cursor, true)
+            const time = serviceWebsocket.view.getFloat32(cursor, true)
             cursor += 4
 
             if (!entities[id]) {
