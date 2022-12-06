@@ -3,10 +3,7 @@ import { PI05, PI2 } from "../../math/MathUtils.js"
 const xmlns = "http://www.w3.org/2000/svg"
 
 export class SkillButton {
-
-    container = document.createElement("div")
-
-    #background = document.createElementNS(xmlns, "svg")
+    container = document.createElementNS(xmlns, "svg")
 
     #cd = document.createElementNS(xmlns, 'path')
 
@@ -15,34 +12,28 @@ export class SkillButton {
     #middle
 
     setImage(imageUrl) {
-        this.#background.style.backgroundImage = `url(${imageUrl})`
+        this.container.style.backgroundImage = `url(${imageUrl})`
     }
-
-    onDown = () => { }
-    onUp = () => { }
 
     constructor({
         parent = document.body,
-        size = 45,
-        margin = 5,
-    } = {}) {
-        this.container.style.padding = `${margin}px`
-        this.container.style.width = `${size + margin*2}px`
-        this.container.style.height = `${size + margin*2}px`
-        parent.appendChild(this.container)
-
+        size = 60
+    }) {
         const m = size / 2
         this.#middle = m
-        this.#background.setAttributeNS(null, 'height', size)
-        this.#background.setAttributeNS(null, 'width', size)
-        this.#background.setAttributeNS(null, 'overflow', 'visible')
-        this.#background.style.userSelect = 'none'
-        this.#background.style.backgroundSize = 'cover'
-        this.container.appendChild(this.#background)
+        this.container.setAttributeNS(null, 'height', size)
+        this.container.setAttributeNS(null, 'width', size)
+        this.container.setAttributeNS(null, 'overflow', 'visible')
+        this.container.style.userSelect = 'none'
+        this.container.style.pointerEvents = 'none'
+        this.container.style.backgroundSize = 'cover'
+        this.container.style.touchAction = 'none'
+
+        parent.appendChild(this.container)
 
         this.#cd.setAttributeNS(null, 'fill', '#00000088')
         this.#cd.setAttributeNS(null, 'd', `M ${m} ${m} L ${m} 0 A ${m} ${m} 0 1 0 0 0`)
-        this.#background.appendChild(this.#cd)
+        this.container.appendChild(this.#cd)
 
         this.#text.setAttribute('fill', '#ffffff')
         this.#text.setAttribute('dominant-baseline', 'middle')
@@ -50,15 +41,11 @@ export class SkillButton {
         this.#text.style.fontSize = `${m / 2}px`
         this.#text.setAttribute('x', m)
         this.#text.setAttribute('y', m)
-        this.#background.appendChild(this.#text)
-
-        this.#background.oncontextmenu = (event) => { event.stopPropagation(); event.preventDefault() }
-        this.#background.onpointerdown = this.#onpointerdown.bind(this)
-        this.#background.onlostpointercapture = this.#onlostpointercapture.bind(this)
+        this.container.appendChild(this.#text)
     }
 
     dispose() {
-        this.#background.remove()
+        this.container.remove()
     }
 
     cooldown = 0.1
@@ -78,16 +65,6 @@ export class SkillButton {
             if (cdNormalized > 0) this.#text.innerHTML = this.cooldown.toFixed(1)
             else this.#text.innerHTML = ''
         }
-    }
-
-    #onpointerdown(event) {
-        this.#background.setPointerCapture(event.pointerId)
-        this.onDown()
-    }
-
-    #onlostpointercapture(event) {
-        this.#background.releasePointerCapture(event.pointerId)
-        this.onUp()
     }
 }
 

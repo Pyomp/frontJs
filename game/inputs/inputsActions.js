@@ -30,26 +30,72 @@ function init() {
 
     Math.cos(PI025 + PI05)
     Math.sin(PI025 + PI05)
-    const r1 = 5
-    const r2 = 70
-    const r3 = 130
+    const r1 = 40
+    const r2 = 95
+    const r3 = 175
+    const r4 = 250
 
     const buttonsPlacement = [
         { bottom: r1, right: r1, imgUrl: new URL('./actionImages/a.svg', import.meta.url).href }, // 0
 
-        { bottom: r2 * Math.cos((PI05 / 2) * 0), right: r2 * Math.sin((PI05 / 2) * 0), imgUrl: new URL('./actionImages/b.svg', import.meta.url).href },
-        { bottom: r2 * Math.cos((PI05 / 2) * 1), right: r2 * Math.sin((PI05 / 2) * 1), imgUrl: new URL('./actionImages/c.svg', import.meta.url).href },
-        { bottom: r2 * Math.cos((PI05 / 2) * 2), right: r2 * Math.sin((PI05 / 2) * 2), imgUrl: new URL('./actionImages/d.svg', import.meta.url).href },
+        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 0), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 0), imgUrl: new URL('./actionImages/b.svg', import.meta.url).href },
+        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 1), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 1), imgUrl: new URL('./actionImages/c.svg', import.meta.url).href },
+        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 2), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 2), imgUrl: new URL('./actionImages/d.svg', import.meta.url).href },
 
-        { bottom: r3 * Math.cos((PI05 / 4) * 0), right: r3 * Math.sin((PI05 / 4) * 0), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: r3 * Math.cos((PI05 / 4) * 1), right: r3 * Math.sin((PI05 / 4) * 1), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: r3 * Math.cos((PI05 / 4) * 2), right: r3 * Math.sin((PI05 / 4) * 2), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: r3 * Math.cos((PI05 / 4) * 3), right: r3 * Math.sin((PI05 / 4) * 3), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href }, // 7
-        { bottom: r3 * Math.cos((PI05 / 4) * 4), right: r3 * Math.sin((PI05 / 4) * 4), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 0), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 0), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 1), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 1), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 2), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 2), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 3), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 3), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href }, // 7
+        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 4), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 4), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
     ]
 
+    let buttonCenters = buttonsPlacement.map(a => [innerWidth - a.right - 35, innerHeight - a.bottom - 35])
+    addEventListener('resize', () => { buttonCenters = buttonsPlacement.map(a => [innerWidth - a.right - 35, innerHeight - a.bottom - 35]) })
+
+    let currentSlot = -1
+    addEventListener('pointerdown', (event) => {
+        if (isLocked() || currentSlot !== -1) return
+
+        if (((innerWidth - event.clientX) ** 2 + (innerHeight - event.clientY) ** 2) > (r4 ** 2)) return
+
+        event.preventDefault(); event.stopPropagation()
+
+        document.body.setPointerCapture(event.pointerId)
+        let slotId = -1
+        let distance = Infinity
+        for (let i = 0; i < buttonCenters.length; i++) {
+            const center = buttonCenters[i]
+            const distanceSq = (center[0] - event.clientX) ** 2 + (center[1] - event.clientY) ** 2
+
+            if (distanceSq < distance) {
+                distance = distanceSq
+                slotId = i
+            }
+        }
+        currentSlot = slotId
+        const actionId = slotId
+
+        actionsDownDispatcher[actionId]?.()
+        actionsOnGoing[actionId] = true
+        if (ActionToBinary[actionId] !== undefined) inputsAction.binaryActions |= ActionToBinary[actionId]
+    }, { capture: true })
+
+    addEventListener('lostpointercapture', (event) => {
+        document.body.releasePointerCapture(event.pointerId)
+        const actionId = currentSlot
+
+        actionsOnGoing[actionId] = false
+
+        actionsUpDispatcher[actionId]?.()
+        if (ActionToBinary[actionId] !== undefined) inputsAction.binaryActions &= ~ActionToBinary[actionId]
+
+        currentSlot = -1
+    })
+
     for (let i = 0; i < 9; i++) {
-        const button = new SkillButton()
+        const button = new SkillButton({
+            size: 60,
+        })
         button.container.style.position = 'fixed'
         button.container.style.bottom = buttonsPlacement[i].bottom + 'px'
         button.container.style.right = buttonsPlacement[i].right + 'px'
@@ -58,40 +104,10 @@ function init() {
         slots.push(button)
     }
 
-    const actionToSlot = {}
-
-    function setSlot(slotId, actionId) {
-        const binary = ActionToBinary[actionId]
-        if (binary === undefined) return
-        actionToSlot[actionId] = slots[slotId]
-        slots[slotId].onDown = () => {
-            if (isLocked()) return
-            actionsDownDispatcher[actionId]?.()
-            actionsOnGoing[actionId] = true
-            inputsAction.binaryActions |= binary
-        }
-        slots[slotId].onUp = () => {
-            if (isLocked()) return
-            actionsOnGoing[actionId] = false
-            inputsAction.binaryActions &= ~binary
-            actionsUpDispatcher[actionId]?.()
-        }
-    }
-
-    setSlot(0, ACTION_INTERACT)
-    setSlot(1, ACTION_JUMP)
-    setSlot(2, ACTION_0)
-    setSlot(3, ACTION_1)
-    setSlot(4, ACTION_2)
-    setSlot(5, ACTION_3)
-    setSlot(6, ACTION_4)
-    setSlot(7, ACTION_5)
-    setSlot(8, ACTION_6)
-
     function setCooldown(actionId, cooldown, maxCooldown) {
-        if (!actionToSlot[actionId]) return
-        actionToSlot[actionId].cooldown = cooldown
-        actionToSlot[actionId].maxCooldown = maxCooldown
+        if (!slots[actionId]) return
+        slots[actionId].cooldown = cooldown
+        slots[actionId].maxCooldown = maxCooldown
     }
 
     inputsAction.setCooldown = setCooldown

@@ -1,7 +1,7 @@
 import { PI2 } from '../../math/MathUtils.js'
 import { Vector3 } from '../../math/Vector3.js'
 import { EventSet } from '../../models/Events.js'
-import { isMobile } from '../../dom/browserInfo.js' 
+import { isMobile } from '../../dom/browserInfo.js'
 
 const MinPolarAngle = 0.1
 const MaxPolarAngle = 3
@@ -9,7 +9,7 @@ const MinDistCam = 1
 const MaxDistCam = 10
 const MinDistCamToGround = 0
 
-export class ThirdControls{
+export class ThirdControls {
     #offsetY = 0.1
     onOffsetY = new EventSet()
     get offsetY() { return this.#offsetY }
@@ -65,6 +65,7 @@ export class ThirdControls{
         target,
     ) {
         domElement.style.touchAction = 'none'
+        domElement.oncontextmenu = (event) => { event.stopPropagation(); event.preventDefault(); return }
 
         const cameraPosition = camera.position
 
