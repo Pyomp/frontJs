@@ -1,4 +1,5 @@
 import { SkillButton } from "../../dom/components/SkillsButton.js"
+import { PI025, PI05 } from "../../math/MathUtils.js"
 import { ActionToBinary, ACTION_0, ACTION_1, ACTION_2, ACTION_3, ACTION_4, ACTION_5, ACTION_6, ACTION_INTERACT, ACTION_JUMP } from "../constants/constantsActions.js"
 import { serviceLoop } from "../services/serviceLoop.js"
 
@@ -27,19 +28,26 @@ function init() {
 
     const slots = []
 
+    Math.cos(PI025 + PI05)
+    Math.sin(PI025 + PI05)
+    const r1 = 5
+    const r2 = 70
+    const r3 = 130
+
     const buttonsPlacement = [
-        { bottom: 40, right: 40, imgUrl: new URL('./actionImages/a.svg', import.meta.url).href }, // 0
-        { bottom: 140, right: 20, imgUrl: new URL('./actionImages/b.svg', import.meta.url).href },
-        { bottom: 120, right: 120, imgUrl: new URL('./actionImages/c.svg', import.meta.url).href },
-        { bottom: 20, right: 140, imgUrl: new URL('./actionImages/d.svg', import.meta.url).href },
+        { bottom: r1, right: r1, imgUrl: new URL('./actionImages/a.svg', import.meta.url).href }, // 0
 
-        { bottom: 240, right: 10, imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: 230, right: 105, imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: 190, right: 190, imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r2 * Math.cos((PI05 / 2) * 0), right: r2 * Math.sin((PI05 / 2) * 0), imgUrl: new URL('./actionImages/b.svg', import.meta.url).href },
+        { bottom: r2 * Math.cos((PI05 / 2) * 1), right: r2 * Math.sin((PI05 / 2) * 1), imgUrl: new URL('./actionImages/c.svg', import.meta.url).href },
+        { bottom: r2 * Math.cos((PI05 / 2) * 2), right: r2 * Math.sin((PI05 / 2) * 2), imgUrl: new URL('./actionImages/d.svg', import.meta.url).href },
 
-        { bottom: 105, right: 230, imgUrl: new URL('./actionImages/e.svg', import.meta.url).href }, // 7
-        { bottom: 10, right: 240, imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r3 * Math.cos((PI05 / 4) * 0), right: r3 * Math.sin((PI05 / 4) * 0), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r3 * Math.cos((PI05 / 4) * 1), right: r3 * Math.sin((PI05 / 4) * 1), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r3 * Math.cos((PI05 / 4) * 2), right: r3 * Math.sin((PI05 / 4) * 2), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        { bottom: r3 * Math.cos((PI05 / 4) * 3), right: r3 * Math.sin((PI05 / 4) * 3), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href }, // 7
+        { bottom: r3 * Math.cos((PI05 / 4) * 4), right: r3 * Math.sin((PI05 / 4) * 4), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
     ]
+
     for (let i = 0; i < 9; i++) {
         const button = new SkillButton()
         button.container.style.position = 'fixed'

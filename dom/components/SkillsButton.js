@@ -23,8 +23,8 @@ export class SkillButton {
 
     constructor({
         parent = document.body,
-        size = 70,
-        margin = 10,
+        size = 45,
+        margin = 5,
     } = {}) {
         this.container.style.padding = `${margin}px`
         this.container.style.width = `${size + margin*2}px`
