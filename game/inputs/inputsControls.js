@@ -105,9 +105,8 @@ function initServiceControls() {
             return
         }
 
-        if (document.pointerLockElement === null) {
-            service3D.renderer.canvas.requestPointerLock()
-        } else if (event.altKey === true || code === 'Escape') {
+        if (document.pointerLockElement !== null
+            && (event.altKey === true || code === 'Escape')) {
             event.preventDefault()
             document.exitPointerLock()
         }
@@ -133,6 +132,12 @@ function initServiceControls() {
                     event.preventDefault(); event.stopPropagation()
                     callback(event)
                 }
+
+                if (document.pointerLockElement === null) {
+                    service3D.renderer.canvas.requestPointerLock()
+                }
+
+                return
             }
         }
     }, { capture: true })

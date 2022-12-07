@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="account.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview829"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="8"
+     inkscape:cx="56.625"
+     inkscape:cy="52.3125"
+     inkscape:window-width="2560"
+     inkscape:window-height="1361"
+     inkscape:window-x="2391"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs824" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path843"
+       style="stroke-width:6.8276;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+       d="m 88.303072,85.63051 c 0,20.3622 -10.427569,-4.096557 -38.661263,-4.096557 -28.233692,0 -38.319881,24.117377 -38.319881,3.755178 0,-20.362197 10.086189,-36.527639 38.319881,-36.527639 28.233694,0 38.661263,16.506822 38.661263,36.869018 z" />
+    <ellipse
+       style="stroke-width:9.99942;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+       id="path845"
+       cx="50.324574"
+       cy="29.644224"
+       rx="25.006069"
+       ry="24.067276" />
+  </g>
+</svg>

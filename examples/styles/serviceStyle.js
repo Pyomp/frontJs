@@ -5,7 +5,10 @@ const darkStyle = {
     '--background1': 'hsl(0, 0%, 4%)',
     '--background2': 'hsl(0, 0%, 8%)',
     '--background3': 'hsl(0, 0%, 12%)',
-    '--background-transparent': 'hsla(0, 0%, 0%, 0.5)',
+    '--background-transparent01': 'rgba(0, 0, 0, 0.1)',
+    '--background-transparent03': 'rgba(0, 0, 0, 0.3)',
+    '--background-transparent05': 'rgba(0, 0, 0, 0.5)',
+    '--background-transparent07': 'rgba(0, 0, 0, 0.7)',
     '--color1': 'hsl(0, 0%, 95%)',
     '--color2': 'hsl(0, 0%, 85%)',
     '--color3': 'hsl(0, 0%, 75%)',
@@ -15,7 +18,10 @@ const lightStyle = {
     '--background1': 'hsl(0, 0%, 100%)',
     '--background2': 'hsl(0, 0%, 90%)',
     '--background3': 'hsl(0, 0%, 80%)',
-    '--background-transparent': 'hsla(0, 0%, 0%, 0.5)',
+    '--background-transparent01': 'rgba(255, 255, 255, 0.1)',
+    '--background-transparent03': 'rgba(255, 255, 255, 0.3)',
+    '--background-transparent05': 'rgba(255, 255, 255, 0.5)',
+    '--background-transparent07': 'rgba(255, 255, 255, 0.7)',
     '--color1': 'hsl(0, 0%, 0%)',
     '--color2': 'hsl(0, 0%, 5%)',
     '--color3': 'hsl(0, 0%, 10%)',
@@ -25,7 +31,7 @@ const styleVar = new StyleVar(darkStyle)
 let onChange = new EventSet()
 let isDark = true
 
-export const styleSwitch = {
+export const serviceStyle = {
     get onChange() { return onChange },
     get isDark() { return isDark },
     get vars() { return styleVar.varKeys },
@@ -55,8 +61,8 @@ body {
 body {
     font-family: Comfortaa, sans-serif;
     -webkit-user-drag: none;
-    background: ${styleSwitch.vars["--background1"]};
-    color: ${styleSwitch.vars["--color1"]};
+    background: ${serviceStyle.vars["--background1"]};
+    color: ${serviceStyle.vars["--color1"]};
 
     line-height: 1.4;
     

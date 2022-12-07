@@ -1,6 +1,7 @@
 "use strict"
 
-import "../examples/styles/styleSwitch.js"
+import "../examples/styles/serviceStyle.js"
+import { componentMenu } from "./menu/componentMenu.js"
 import { initAuthentication } from "./components/authentication.js"
 import { initGame } from "./game.js"
 import { initServerSelection } from "./components/serverSelection.js"
@@ -29,3 +30,5 @@ initSystemFrames()
 serviceStore.initWebsocket()
 
 serviceWebsocket.connect(provider, token, host + '/game')
+
+await componentMenu.init()

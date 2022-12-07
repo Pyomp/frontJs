@@ -1,6 +1,6 @@
 "use strict"
 
-import "../styles/styleSwitch.js"
+import "../styles/serviceStyle.js"
 import { initAuthentication } from "../../game/components/authentication.js"
 
 await initAuthentication()
