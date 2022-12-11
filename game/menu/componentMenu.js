@@ -1,15 +1,11 @@
 import { serviceStyle } from "../../examples/styles/serviceStyle.js"
 import { inputsAction } from "../inputs/inputsActions.js"
 import { inputControls } from "../inputs/inputsControls.js"
-import { service3D } from "../services/service3D.js"
 import { componentChat } from "./componentChat.js"
 
 async function init() {
     const MenuWidth = 40
     componentChat.init()
-    componentChat.container.style.position = 'fixed'
-    componentChat.container.style.left = `${MenuWidth}px`
-    document.body.appendChild(componentChat.container)
 
     const menuContainer = document.createElement('div')
     menuContainer.style.position = 'fixed'
@@ -21,14 +17,6 @@ async function init() {
     menuContainer.style.display = 'flex'
     menuContainer.style.flexDirection = 'column'
     menuContainer.style.transition = 'background 0.3s'
-
-    const [cogSvgStr, bagSvgStr] =
-        await Promise.all([
-            fetch(new URL('./icons/cog.svg', import.meta.url)).then(res => res.text()),
-            fetch(new URL('./icons/school-bag.svg', import.meta.url)).then(res => res.text())
-        ])
-
-    menuContainer.innerHTML = cogSvgStr + bagSvgStr
 
     /**@return {SVGAElement}*/
     function setIconElement(svgElement) {
@@ -43,8 +31,6 @@ async function init() {
         return svgElement
     }
 
-    const cogSvg = setIconElement(menuContainer.firstElementChild)
-    const bagSvg = setIconElement(cogSvg.nextElementSibling)
 
     const ContentWidth = 350
     const contentContainer = document.createElement('div')
@@ -74,7 +60,6 @@ async function init() {
     function closeAll() {
         opened = false
 
-        componentChat.isLock = false
         inputControlsUnlock()
         inputsActionUnlock()
 
@@ -89,15 +74,16 @@ async function init() {
 
     function createContainer(associatedButton) {
         const div = document.createElement('div')
-        div.style.position = 'absolute'
-        div.style.left = StyleLeftClosed
-        div.style.pointerEvents = 'initial'
+        div.style.pointerEvents = 'auto'
         div.style.height = '100%'
         div.style.width = '100%'
         div.style.background = serviceStyle.vars["--background-transparent07"]
+        div.style.position = 'absolute'
+        div.style.left = StyleLeftClosed
         div.style.opacity = '0'
         div.style.transitionProperty = 'opacity, left'
         div.style.transitionDuration = '0.3s, 0.3s'
+        div.style.pointerEvents = 'none'
 
         div.ontransitionend = (event) => { if (div.style.opacity === '0') div.style.visibility = 'hidden' }
         contentContainer.appendChild(div)
@@ -115,14 +101,13 @@ async function init() {
 
                 opened = true
 
-                componentChat.isLock = true
                 inputControlsUnlock()
                 inputControlsUnlock = inputControls.lock()
                 inputsActionUnlock()
                 inputsActionUnlock = inputsAction.lock()
 
-                menuContainer.style.pointerEvents = ''
                 contentContainer.style.pointerEvents = ''
+                menuContainer.style.pointerEvents = ''
                 menuContainer.style.background = serviceStyle.vars["--background-transparent07"]
             }
         }
@@ -130,10 +115,39 @@ async function init() {
         return div
     }
 
-    const settingsContainer = createContainer(cogSvg)
-    settingsContainer.textContent = 'SETTINGS'
-    const bagContainer = createContainer(bagSvg)
-    bagContainer.textContent = 'BAG'
+    function addCustomElement(associatedButton, element) {
+        const div = document.createElement('div')
+        div.style.pointerEvents = 'auto'
+        div.style.position = 'fixed'
+        div.style.left = `${MenuWidth}px`
+        div.style.maxHeight = '100%'
+        div.style.overflowX = 'hidden'
+        div.style.overflowY = 'auto'
+        document.body.appendChild(div)
+
+        element.style.position = 'relative'
+        element.style.opacity = '0'
+        element.style.transitionProperty = 'opacity, left'
+        element.style.transitionDuration = '0.3s, 0.3s'
+        element.ontransitionend = (event) => { if (element.style.opacity === '0') element.style.visibility = 'hidden' }
+        div.appendChild(element)
+
+        contents.push(element)
+
+        associatedButton.onclick = (event) => {
+            event.preventDefault(); event.stopPropagation()
+            let wasClosing = element.style.opacity === '0'
+            closeAll()
+            if (wasClosing) {
+                element.style.visibility = 'visible'
+                element.style.opacity = '1'
+                element.style.left = '0px'
+            }
+        }
+
+        return div
+    }
+
 
     const TotalWidth = MenuWidth + ContentWidth
     addEventListener('pointerdown', (event) => {
@@ -144,6 +158,28 @@ async function init() {
     }, { capture: true })
 
     document.body.appendChild(menuContainer)
+
+    ///////////////////////
+
+    const [chatSvgStr, cogSvgStr, bagSvgStr] =
+        await Promise.all([
+            fetch(new URL('./icons/chat-bubble.svg', import.meta.url)).then(res => res.text()),
+            fetch(new URL('./icons/cog.svg', import.meta.url)).then(res => res.text()),
+            fetch(new URL('./icons/school-bag.svg', import.meta.url)).then(res => res.text()),
+        ])
+
+    menuContainer.innerHTML = chatSvgStr + cogSvgStr + bagSvgStr
+    const chatSvg = setIconElement(menuContainer.firstElementChild)
+    const cogSvg = setIconElement(chatSvg.nextElementSibling)
+    const bagSvg = setIconElement(cogSvg.nextElementSibling)
+
+    addCustomElement(chatSvg, componentChat.container)
+
+    const settingsContainer = createContainer(cogSvg)
+    settingsContainer.textContent = 'SETTINGS'
+
+    const bagContainer = createContainer(bagSvg)
+    bagContainer.textContent = 'BAG'
 }
 
 export const componentMenu = {

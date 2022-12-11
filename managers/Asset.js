@@ -8,8 +8,8 @@ const FREE_TIMEOUT = 10_000
 function freeAll(assetsDictionary) {
     for (const key in assetsDictionary) {
         const value = assetsDictionary[key]
-        if (value.free) {
-            value.free()
+        if (value.freeForce) {
+            value.freeForce()
         } else {
             freeAll(value)
         }
@@ -61,7 +61,7 @@ export class Asset extends EventTarget {
         return this.#loadPrivate()
     }
 
-    free() {
+    freeForce() {
         clearTimeout(this.#freeTimeout)
         this.#loadedAsset = undefined
         this.#isPreloaded = false
@@ -72,14 +72,14 @@ export class Asset extends EventTarget {
         clearTimeout(this.#freeTimeout)
         const loadedAsset = await this.#loadPrivate(...data)
         const object = this.#create(loadedAsset)
-        if (this.#autoDispose) object.addEventListener('dispose', this.instanceDispose.bind(this))
+        if (this.#autoDispose) object.addEventListener('dispose', this.free.bind(this))
         return object
     }
 
-    instanceDispose() {
+    free() {
         this.#count--
         if (this.#isPreloaded === false && this.#count === 0) {
-            this.#freeTimeout = setTimeout(this.free.bind(this), FREE_TIMEOUT)
+            this.#freeTimeout = setTimeout(this.freeForce.bind(this), FREE_TIMEOUT)
         }
         this.dispatchEvent(event)
     }

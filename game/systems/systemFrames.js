@@ -4,14 +4,16 @@ import { initInputsMove } from "../inputs/inputsMove.js"
 import { serviceLoop } from "../services/serviceLoop.js"
 import { serviceWebsocket } from "../services/serviceWebsocket.js"
 import { frameHandlerActionsCooldown } from "./handlerActionsCooldown.js"
-import { frameHandlerBlader, initSystemBlader } from "./systemFramesEntities/handlerBlader.js"
+import { frameHandlerEntity } from "./handlerEntity.js"
 import { frameHandlerZone0 } from "./systemFramesZones/handlerZone0.js"
 
 let nextControlsUpdate = 0
 
 export function initSystemFrames() {
-    const dispatcher = { [1]: frameHandlerBlader, [2]: frameHandlerZone0, [3]: frameHandlerActionsCooldown }
-    initSystemBlader()
+    const dispatcher = {
+        [1]: (view, cursor) => frameHandlerEntity(view, cursor, 1),
+        [2]: (view, cursor) => frameHandlerEntity(view, cursor, 2),
+    }
 
     const inputsMove = initInputsMove()
 

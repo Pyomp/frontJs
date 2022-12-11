@@ -65,8 +65,8 @@ function deleteElement(element) {
 /**
  * Use the history previous button (previous on mobile) has a "closer".  
  * When this button is triggered, remove the last added `HTMLElement`.  
- * If the `HTMLElement` is removed by another thing, the element will 
- * be automaticaly removed from this history.  
+ * If the `HTMLElement` is removed from another thing, the element will 
+ * be automatically removed from this history.  
  * To trigger a close event on the element remove (for example to reset a state at the close)
  * you can use `mutationManager` (see "./mutationManager.js").
  */

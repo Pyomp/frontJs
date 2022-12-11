@@ -6,22 +6,22 @@ export class InitManager {
     #needsGarbageCollector = false
     #initCount = 0
     #initPromise
-    #timeBeforeActualyDestroyMs
+    #timeBeforeActuallyDestroyMs
 
     /**
      * Prevent second `init` and only `destroy` when all instances used `destroy`.  
      * `destroy` is delayed (for performance: if init is re-used for a scene switch for example)  
      * @param {()=>Promise } init 
      * @param {()=>{}} destroy
-     * @param {number} timeBeforeActualyDestroyMs 
+     * @param {number} timeBeforeActuallyDestroyMs 
      */
-    constructor(init, destroy, timeBeforeActualyDestroyMs = 5000) {
-        this.#timeBeforeActualyDestroyMs = timeBeforeActualyDestroyMs
+    constructor(init, destroy, timeBeforeActuallyDestroyMs = 5000) {
+        this.#timeBeforeActuallyDestroyMs = timeBeforeActuallyDestroyMs
         this.#init = init
         this.#destroy = destroy
     }
 
-    init = (...param) => {
+    init(...param) {
         this.#initCount++
         if (this.#initCount === 1) {
             // if destroy and init are call in short time (like scene => second scene)
@@ -35,14 +35,14 @@ export class InitManager {
         return this.#initPromise
     }
 
-    destroy = (...param) => {
+    destroy(...param) {
         this.#initCount--
         if (this.#initCount === 0) {
             this.#needsGarbageCollector = true
             this.#timeout = setTimeout(() => {
                 this.#needsGarbageCollector = false
                 this.#destroy(...param)
-            }, this.#timeBeforeActualyDestroyMs)
+            }, this.#timeBeforeActuallyDestroyMs)
         }
     }
 }

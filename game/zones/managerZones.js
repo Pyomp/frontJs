@@ -20,7 +20,7 @@ export const managerZones = {
 
             currentId = id
 
-            await zoneDictionary[currentId].init()
+            await zoneDictionary[currentId].assets.init()
             new zoneDictionary[currentId]()
         }
 

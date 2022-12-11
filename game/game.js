@@ -1,8 +1,9 @@
-import { Blader3D } from "./entities/blader/Blader3D.js" 
+import { BLADER_ID, FIFI_ID } from "./constants/constantsEntities.js"
+import { Entity3D } from "./entities/Entity3D.js"
 
 export async function initGame() {
     /** asset init */
     await Promise.all([
-        Blader3D.init(),
+        Entity3D.init(BLADER_ID, FIFI_ID),
     ])
 }

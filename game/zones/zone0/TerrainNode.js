@@ -12,7 +12,7 @@ import { PI, PI2 } from '../../../math/MathUtils.js'
 
 let gltfPrimitive, map1, map2, map3, splattingTexture
 
-const { init, destroy } = new InitManager(
+const assets = new InitManager(
     async () => {
         await Points.init()
 
@@ -55,8 +55,7 @@ const { init, destroy } = new InitManager(
 )
 
 export class Zone0 {
-    static init = init
-    static destroy = destroy
+    static assets = assets
 
     #meshTerrain = new SplattingMesh(
         gltfPrimitive,
@@ -107,16 +106,19 @@ const initLights = () => {
         service3D.renderer.pointLights.add(light)
         const spherical = new Spherical(1.2, Math.random() * PI2, Math.random() * PI2)
         light.color.setHSL(Math.random(), 1, 0.7)
-        light.intensity = 3
+        light.intensity = 100
+
+
+        points.updateColors(light.color, i)
 
         let age = Math.random() * PI * 2
 
         const update = (dt) => {
             age += dt / 10
 
-            light.position.x = Math.cos(age) * 50 * Math.sin(age) ** 2
-            light.position.z = Math.sin(age) * 50 * Math.cos(age) ** 3
-            light.position.y = 5 + 3 * Math.cos(age) ** 3
+            light.position.x = Math.cos(age) * 200 * Math.sin(age) ** 2
+            light.position.z = Math.sin(age) * 200 * Math.cos(age) ** 3
+            light.position.y = 25 + 20 * Math.cos(age) ** 3
 
             light.position.toArray(points.positions, i * 3)
         }

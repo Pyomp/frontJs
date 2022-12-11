@@ -8,6 +8,11 @@ const _position = new Vector3()
 const _scale = new Vector3()
 const _quaternion = new Quaternion()
 
+const _q0 = new Quaternion()
+const _q1 = new Quaternion()
+const _q2 = new Quaternion()
+const _q3 = new Quaternion()
+
 const tracksCache = new WeakMap()
 const initialPoseCache = new WeakMap()
 
@@ -135,9 +140,10 @@ export class Animations {
     */
     #cubicVector3Interpolation(index, keys, frames) {
         if (index === 0) {
-            _vector3.copy(frames[1])
+            _vector3.copy(frames[0])
         } else if (index >= keys.length) {
-            _vector3.copy(frames[frames.length - 2])
+            if (keys.length < 3) _vector3.copy(frames[0])
+            else _vector3.copy(frames[frames.length - 2])
         } else {
             const alpha = this.#getAlpha(index, keys)
             _vector3.cubicSpline(
@@ -197,6 +203,7 @@ export class Animations {
             const alpha = this.#getAlpha(index, keys)
             _quaternion.slerpQuaternions(frames[index - 1], frames[index], alpha)
         }
+        return _quaternion
     }
 
     /**
@@ -211,6 +218,27 @@ export class Animations {
             _quaternion.copy(frames[frames.length - 2])
         } else {
             const alpha = this.#getAlpha(index, keys)
+
+            const deltaTime = keys[index] - keys[index - 1]
+
+            // _q0.copy(frames[(index - 1) * 3 + 2])
+            // _q0.x *= deltaTime
+            // _q0.y *= deltaTime
+            // _q0.z *= deltaTime
+            // _q0.w *= deltaTime
+
+            // _q1.copy(frames[index * 3])
+            // _q1.x *= deltaTime
+            // _q1.y *= deltaTime
+            // _q1.z *= deltaTime
+            // _q1.w *= deltaTime
+
+            // _quaternion.cubicSpline(
+            //     frames[(index - 1) * 3 + 1], _q0,
+            //     frames[index * 3 + 1], _q1,
+            //     alpha
+            // )
+
             _quaternion.cubicSpline(
                 frames[(index - 1) * 3 + 1], frames[(index - 1) * 3 + 2],
                 frames[index * 3 + 1], frames[index * 3],

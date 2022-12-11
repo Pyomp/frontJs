@@ -1,6 +1,6 @@
-import { Box3 } from '../../math/Box3.js'
-import { Ray } from '../../math/Ray.js'
-import { Vector3 } from '../../math/Vector3.js'
+import { Box3 } from '../math/Box3.js'
+import { Ray } from '../math/Ray.js'
+import { Vector3 } from '../math/Vector3.js'
 
 const _ray = new Ray()
 

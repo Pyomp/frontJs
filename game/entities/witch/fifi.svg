@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   viewBox="0 0 100 100"
+   id="svg51"
+   sodipodi:docname="red.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   width="100px"
+   height="100px"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:export-filename="C:\Users\nico\Sync\CabaneTD2\assets\textures\heroes\red.png"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs55" />
+  <sodipodi:namedview
+     id="namedview53"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="7.19"
+     inkscape:cx="45.340751"
+     inkscape:cy="51.668985"
+     inkscape:current-layer="svg51" />
+  <linearGradient
+     id="linearGradient1790"
+     x1="50"
+     x2="50.306"
+     y1="100"
+     y2="199.15"
+     gradientTransform="matrix(1.005565,0,0,1.002306,0,-100.2306)"
+     gradientUnits="userSpaceOnUse">
+    <stop
+       stop-color="#1700ff"
+       offset="0"
+       id="stop2"
+       style="stop-color:#fd0000;stop-opacity:1" />
+    <stop
+       stop-color="#ffebeb"
+       offset="1"
+       id="stop4"
+       style="stop-color:#ffcbcb;stop-opacity:1" />
+  </linearGradient>
+  <path
+     d="M 0,100.2306 H 100.5565 V 0 H 0 Z"
+     fill="url(#linearGradient1790)"
+     stroke-width="15.059"
+     id="path7"
+     style="fill:url(#linearGradient1790)" />
+  <path
+     d="m92.713 37.726c0.030534 5.6889-20.868-20.915-41.965-20.972-21.097-0.057009-42.386 26.436-42.417 20.747-0.030472-5.6885 21.198-43.558 42.295-43.501 21.097 0.056942 42.057 38.037 42.087 43.726z"
+     fill="#fff"
+     fill-opacity=".21138"
+     id="path9" />
+  <path
+     d="m29.535 54.25c1.5326-11.148 13.034-18.374 19.656-18.294 13.789 0.16664 21.204 13.012 21.034 17.663-0.19357 5.2967-6.963 7.6381-20.752 7.4715-6.6216-0.080015-20.527-2.5571-19.939-6.8398z"
+     fill-opacity=".14228"
+     id="path11" />
+  <path
+     d="m39.822 52.34c1.2036-8.3694 5.8211-9.8363 9.495-9.7919 7.6506 0.09246 11.761 7.0535 11.666 9.5736-0.10892 2.8699-4.0703 3.6935-11.721 3.6011-3.6739-0.0444-9.7734-1.0642-9.44-3.3827z"
+     fill-opacity=".16667"
+     id="path13" />
+  <g
+     id="g21">
+    <path
+       d="m83.872 39.484c0.50481 0.47166-4.4767 3.7401-5.7254 4.4888-2.6004 1.5591-4.7057 5.0185-5.7569 4.0363-1.0512-0.98217 1.6684-4.1293 4.2687-5.6883 1.2487-0.74869 6.7088-3.3084 7.2136-2.8368z"
+       fill="#0c0d0c"
+       fill-opacity=".17886"
+       id="path15" />
+    <path
+       d="m16.02 43.061c-1.4448 0.34504 7.5637 9.9697 7.8391 9.1114 0.57349-1.7874-1.6639-5.9998-4.7306-7.244-1.2825-0.52032-1.6638-2.2124-3.1085-1.8674z"
+       fill-opacity=".17886"
+       id="path17" />
+    <path
+       d="m36.17 13.304c-0.81811-1.7213-21.12 13.704-19.212 13.542 3.9734-0.33865 7.0221-4.8315 10.613-7.6254 2.6038-2.0256 9.4171-4.1949 8.599-5.9162z"
+       fill-opacity=".18293"
+       id="path19" />
+  </g>
+  <g
+     fill="#fff"
+     id="g29">
+    <path
+       d="m90.77 49.843c2.7763 3.484 0.35982 10.986-1.2273 12.028-1.5871 1.0424-2.3446-4.3741-5.1213-7.8584s-7.5709-5.0354-5.9837-6.0778c1.5872-1.0424 9.556-1.576 12.332 1.908z"
+       fill-opacity=".60317"
+       id="path23" />
+    <path
+       d="m76.906 59.63c-1.188-1.4022-0.8768-4.3699 0.09885-5.4953 0.97565-1.1254 2.6153-0.40795 3.8039 0.99416 1.1886 1.4021 1.9245 3.4876 0.94858 4.6132s-3.6634 1.2902-4.8514-0.112z"
+       fill-opacity=".59683"
+       id="path25" />
+    <rect
+       x="95.828"
+       y="-1.2517"
+       width="5.4242"
+       height="4.8679"
+       fill-rule="evenodd"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       stroke-width="15"
+       style="paint-order:stroke markers fill"
+       id="rect27" />
+  </g>
+  <rect
+     x="95.114"
+     y="94.715"
+     width="5.4425"
+     height="5.5156"
+     fill="#ffb88b"
+     fill-rule="evenodd"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="18.201"
+     style="paint-order:stroke markers fill"
+     id="rect31" />
+  <g
+     id="g41">
+    <path
+       d="m33.619 87.683c0 1.6143 12.337 4.6528 15.714 5.1398 6.4902 0.93588 13.396 0.21035 13.396-3.1513 0-3.3616-4.5114-4.9832-11.039-4.9832-3.1347-1e-6 -18.071 1.3804-18.071 2.9947z"
+       fill-opacity=".17886"
+       id="path33" />
+    <path
+       d="m39.035 87.852c0 0.78574 9.5893 2.811 11.636 3.048 3.9331 0.45553 8.1182-0.37018 8.1182-2.0064 0-1.6362-2.734-1.3437-6.6898-1.3437-1.8997 0-13.064-0.48371-13.064 0.30203z"
+       fill-opacity=".17886"
+       id="path35" />
+    <path
+       d="m27.713 74.791c0-2.415 18.163-0.25855 23.029-0.98702 9.3534-1.4001 19.306-3.6986 19.306 1.3304 0 5.029-6.5017 7.4549-15.909 7.4549-4.5176 0-26.426-5.3833-26.426-7.7983z"
+       fill-opacity=".18293"
+       id="path37" />
+    <path
+       d="m38.715 76.132c0-1.1755 11.007-0.12585 13.956-0.48042 5.6683-0.68148 11.7-1.8002 11.7 0.64757 0 2.4478-3.9401 3.6286-9.641 3.6286-2.7377 1e-6 -16.014-2.6202-16.014-3.7957z"
+       fill-opacity=".18293"
+       id="path39" />
+  </g>
+  <g
+     fill-rule="evenodd"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="18.201"
+     id="g49">
+    <rect
+       x="95.114"
+       y="89.221"
+       width="5.4425"
+       height="5.5156"
+       fill="#ff8181"
+       style="paint-order:stroke markers fill"
+       id="rect43" />
+    <rect
+       x="95.114"
+       y="83.658"
+       width="5.4425"
+       height="5.5156"
+       fill="#ffa4a4"
+       style="paint-order:stroke markers fill"
+       id="rect45" />
+    <rect
+       x="95.113998"
+       y="78.142395"
+       width="5.4425001"
+       height="5.5156002"
+       style="paint-order:stroke markers fill"
+       id="rect47" />
+    <rect
+       x="95.113998"
+       y="72.626793"
+       width="5.4425001"
+       height="5.5156002"
+       style="paint-order:stroke markers fill;fill:#002a6f;fill-opacity:1"
+       id="rect845" />
+  </g>
+</svg>

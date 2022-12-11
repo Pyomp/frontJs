@@ -116,7 +116,7 @@ class Quaternion {
         dst[dstOffset + 3] = w0 * w1 - x0 * x1 - y0 * y1 - z0 * z1
 
         return dst
-        
+
     }
 
     get x() {
@@ -203,15 +203,9 @@ class Quaternion {
 
     }
 
-    setFromEuler(euler, update) {
+    setFromEuler(vector3) {
 
-        if (!(euler && euler.isEuler)) {
-
-            throw new Error('THREE.Quaternion: .setFromEuler() now expects an Euler rotation rather than a Vector3 and order.')
-
-        }
-
-        const x = euler._x, y = euler._y, z = euler._z, order = euler._order
+        const x = vector3.x, y = vector3.y, z = vector3.z
 
         // http://www.mathworks.com/matlabcentral/fileexchange/
         // 	20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/
@@ -228,59 +222,12 @@ class Quaternion {
         const s2 = sin(y / 2)
         const s3 = sin(z / 2)
 
-        switch (order) {
-
-            case 'XYZ':
-                this._x = s1 * c2 * c3 + c1 * s2 * s3
-                this._y = c1 * s2 * c3 - s1 * c2 * s3
-                this._z = c1 * c2 * s3 + s1 * s2 * c3
-                this._w = c1 * c2 * c3 - s1 * s2 * s3
-                break
-
-            case 'YXZ':
-                this._x = s1 * c2 * c3 + c1 * s2 * s3
-                this._y = c1 * s2 * c3 - s1 * c2 * s3
-                this._z = c1 * c2 * s3 - s1 * s2 * c3
-                this._w = c1 * c2 * c3 + s1 * s2 * s3
-                break
-
-            case 'ZXY':
-                this._x = s1 * c2 * c3 - c1 * s2 * s3
-                this._y = c1 * s2 * c3 + s1 * c2 * s3
-                this._z = c1 * c2 * s3 + s1 * s2 * c3
-                this._w = c1 * c2 * c3 - s1 * s2 * s3
-                break
-
-            case 'ZYX':
-                this._x = s1 * c2 * c3 - c1 * s2 * s3
-                this._y = c1 * s2 * c3 + s1 * c2 * s3
-                this._z = c1 * c2 * s3 - s1 * s2 * c3
-                this._w = c1 * c2 * c3 + s1 * s2 * s3
-                break
-
-            case 'YZX':
-                this._x = s1 * c2 * c3 + c1 * s2 * s3
-                this._y = c1 * s2 * c3 + s1 * c2 * s3
-                this._z = c1 * c2 * s3 - s1 * s2 * c3
-                this._w = c1 * c2 * c3 - s1 * s2 * s3
-                break
-
-            case 'XZY':
-                this._x = s1 * c2 * c3 - c1 * s2 * s3
-                this._y = c1 * s2 * c3 - s1 * c2 * s3
-                this._z = c1 * c2 * s3 + s1 * s2 * c3
-                this._w = c1 * c2 * c3 + s1 * s2 * s3
-                break
-
-            default:
-                console.warn('THREE.Quaternion: .setFromEuler() encountered an unknown order: ' + order)
-
-        }
-
-        if (update !== false) this._onChangeCallback()
+        this._x = s1 * c2 * c3 + c1 * s2 * s3
+        this._y = c1 * s2 * c3 - s1 * c2 * s3
+        this._z = c1 * c2 * s3 + s1 * s2 * c3
+        this._w = c1 * c2 * c3 - s1 * s2 * s3
 
         return this
-
     }
 
     setFromAxisAngle(axis, angle) {
@@ -612,7 +559,7 @@ class Quaternion {
         const t = interpolationValue
         const t2 = t * t
         const t3 = t2 * t
-        
+
         const a = (2 * t3 - 3 * t2 + 1)
         const b = (t3 - 2 * t2 + t)
         const c = (-2 * t3 + 3 * t2)

@@ -13,30 +13,32 @@ const vs = `#version 300 es
 ${Camera.vs_pars()}
 
 in vec3 a_position;
-
+in vec3 a_color;
+out vec3 v_color;
 uniform mat4 u_worldMatrix;
 
 void main(){
-
+    v_color = a_color;
     gl_Position = u_projectionViewMatrix * u_worldMatrix * vec4(a_position, 1.0);
 
     // gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
     // gl_PointSize = 20.;
-    gl_PointSize = 300. / gl_Position.z;
+    gl_PointSize = 5000. / gl_Position.z;
 }
 `
 const fs = `#version 300 es
 precision highp float;
 precision highp int;
 
-uniform vec3 u_color;
 uniform sampler2D u_map;
+
+in vec3 v_color;
 
 out vec4 color;
 
 void main(){
 
-    color = texture(u_map, gl_PointCoord.xy) * vec4(u_color, 1.0);
+    color = texture(u_map, gl_PointCoord.xy) * vec4(v_color, 1.0);
     // color = vec4(1.0, 0.0, 0.0, 1.0);
     // color.rgb *= color.a;
     // if(color.a < 0.1) discard;
@@ -66,15 +68,15 @@ export class Points extends Object3D {
         if (!map) throw new Error('Points is not initialized "await Points.init()"')
 
         const positions = new Float32Array(3 * count)
-        const color = new Color(1, 1, 1)
+        const colors = new Float32Array(3 * count)
         super({
             shader: shader,
             material: material,
             geometry: new Geometry([
-                new Attribute('a_position', positions, "VEC3", "DYNAMIC_DRAW")
+                new Attribute('a_position', positions, "VEC3", "DYNAMIC_DRAW"),
+                new Attribute('a_color', colors, "VEC3")
             ]),
             uniforms: {
-                u_color: new Uniform(color),
                 u_worldMatrix: new Uniform()
             },
             textures: {
@@ -84,7 +86,12 @@ export class Points extends Object3D {
         })
 
         this.positions = positions
-        this.color = color
+        this.colors = colors
+    }
+
+    updateColors(color, pointIndex) {
+        color.toArray(this.colors, pointIndex * 3)
+        this.vao.attributesUpdate('a_color')
     }
 
     init(node) {

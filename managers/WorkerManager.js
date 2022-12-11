@@ -2,7 +2,7 @@
 
 /**
  * NEEDS TEST  
- * protocole to communicate between main and worker  
+ * protocol to communicate between main and worker  
 */
 export class WorkerManager {
     constructor(

@@ -1,27 +1,19 @@
-import { serviceLoop } from "../../services/serviceLoop.js"
-import { Blader3D } from "../../entities/blader/Blader3D.js"
-import { storeSettings } from "../../store/storeSettings.js"
-import { service3D } from "../../services/service3D.js"
-
-const instances = {}
-
-export function initSystemBlader() {
-  storeSettings.onId.add(() => {
-    if (instances[storeSettings.id]) { service3D.controls.target = instances[storeSettings.id].node3dPosition }
-  })
-}
+import { Entity3D } from "../entities/Entity3D.js"
+import { service3D } from "../services/service3D.js"
+import { serviceLoop } from "../services/serviceLoop.js"
+import { storeSettings } from "../store/storeSettings.js"
 
 /**
  * @param {DataView} view 
  * @param {Number} offset
  */
-export function frameHandlerBlader(view, offset) {
+export function frameHandlerEntity(view, offset, familyId) {
   let cursor = offset
-  const id = view.getBigUint64(cursor, true)
+  const entityId = view.getBigUint64(cursor, true)
   cursor += 8
 
-  const instance = Blader3D.instances[id] || new Blader3D(id)
-  if (id == storeSettings.id) service3D.controls.target = instance.node3dPosition
+  const instance = Entity3D.instances[familyId]?.[entityId] || new Entity3D(familyId, entityId)
+  if (entityId == storeSettings.id) service3D.controls.target = instance.nodePosition
 
   const position = instance.position
   position.x = view.getFloat32(cursor, true)

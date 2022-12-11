@@ -1,4 +1,5 @@
 import { Node3D } from "../../webGlEngine/core/Node3D.js"
+import { GlbLoader } from "../../webGlEngine/gltfLoader/GlbLoader.js"
 import { Renderer } from "../../webGlEngine/renderer/Renderer.js"
 import { ThirdControls } from "../../webGlEngine/utils/ThirdControls.js"
 import { serviceLoop } from "./serviceLoop.js"
@@ -24,5 +25,6 @@ function init() {
 export const service3D = {
     init,
     /** @type {Renderer} */ renderer: undefined,
-    /** @type {ThirdControls} */ controls: undefined
+    /** @type {ThirdControls} */ controls: undefined,
+    glbLoader: new GlbLoader()
 }

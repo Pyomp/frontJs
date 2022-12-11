@@ -12,6 +12,7 @@ import { inputControls } from "./inputs/inputsControls.js"
 import { serviceStore } from "./services/store/serviceStore.js"
 import { inputsAction } from "./inputs/inputsActions.js"
 import { initCaches, initServiceWorker } from "../dom/serviceWorkerInstall.js"
+import { helperModels } from "../webGlEngine/helpers/helpersInit.js"
 
 await initCaches()
 await initServiceWorker()
@@ -19,6 +20,8 @@ await initServiceWorker()
 const { provider, token, serversState } = await initAuthentication()
 
 const host = await initServerSelection(serversState)
+
+await helperModels.init
 
 await initGame()
 
