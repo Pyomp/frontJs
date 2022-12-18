@@ -67,12 +67,13 @@ export class Zone0 {
         objects: [this.#meshTerrain]
     })
 
-    #lightsDispose
+    #lightsDispose 
 
     constructor() {
         if (!gltfPrimitive) throw new Error('TerrainNode is not initialized "await TerrainNode.init()"')
 
-        this.#lightsDispose = initLights()
+        initLights()
+        // this.#lightsDispose = initPointLights()
     }
 
     dispose() {
@@ -81,19 +82,21 @@ export class Zone0 {
     }
 }
 
-const initLights = () => {
+function initLights() {
     const directionalLight = service3D.renderer.lights.directionalLights[0]
     directionalLight.direction.set(-1, -1, -1).normalize()
-    directionalLight.intensity = 0.2
+    directionalLight.intensity = 0.5
     directionalLight.color.setRGB(1, 1, 1)
     directionalLight.visible = 1
     directionalLight.needsUpdate = true
     service3D.renderer.lights.update()
 
     service3D.renderer.lights.ambientLight.color.setRGB(1, 1, 1)
-    service3D.renderer.lights.ambientLight.intensity = 0.1
+    service3D.renderer.lights.ambientLight.intensity = 0.3
     service3D.renderer.lights.ambientLight.needsUpdate = true
+}
 
+function initPointLights() {
     const POINT_LIGHT_COUNT = 20
     const updates = []
 

@@ -36,17 +36,17 @@ function init() {
     const r4 = 250
 
     const buttonsPlacement = [
-        { bottom: r1, right: r1, imgUrl: new URL('./actionImages/a.svg', import.meta.url).href }, // 0
+        { bottom: r1, right: r1, imgUrl: new URL('./actionImages/attack.svg', import.meta.url).href }, // 0
 
-        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 0), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 0), imgUrl: new URL('./actionImages/b.svg', import.meta.url).href },
-        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 1), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 1), imgUrl: new URL('./actionImages/c.svg', import.meta.url).href },
-        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 2), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 2), imgUrl: new URL('./actionImages/d.svg', import.meta.url).href },
+        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 0), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 0), imgUrl: new URL('./actionImages/jump.svg', import.meta.url).href },
+        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 1), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 1), imgUrl: new URL('./actionImages/slide.svg', import.meta.url).href },
+        { bottom: r1 / 2 + r2 * Math.cos((PI05 / 2) * 2), right: r1 / 2 + r2 * Math.sin((PI05 / 2) * 2), imgUrl: new URL('./actionImages/interact.svg', import.meta.url).href },
 
-        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 0), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 0), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 1), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 1), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 2), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 2), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
-        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 3), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 3), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href }, // 7
-        { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 4), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 4), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        // { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 0), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 0), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        // { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 1), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 1), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        // { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 2), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 2), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
+        // { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 3), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 3), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href }, // 7
+        // { bottom: r1 / 4 + r3 * Math.cos((PI05 / 4) * 4), right: r1 / 4 + r3 * Math.sin((PI05 / 4) * 4), imgUrl: new URL('./actionImages/e.svg', import.meta.url).href },
     ]
 
     let buttonCenters = buttonsPlacement.map(a => [innerWidth - a.right - 35, innerHeight - a.bottom - 35])
@@ -92,7 +92,7 @@ function init() {
         currentSlot = -1
     })
 
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < buttonsPlacement.length; i++) {
         const button = new SkillButton({
             size: 60,
         })

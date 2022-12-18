@@ -8,11 +8,6 @@ const _position = new Vector3()
 const _scale = new Vector3()
 const _quaternion = new Quaternion()
 
-const _q0 = new Quaternion()
-const _q1 = new Quaternion()
-const _q2 = new Quaternion()
-const _q3 = new Quaternion()
-
 const tracksCache = new WeakMap()
 const initialPoseCache = new WeakMap()
 
@@ -31,11 +26,12 @@ export class Animations {
 
     /**
      * @param {GltfAnimations} gltfAnimations 
-     * @param {Skin} skin 
+     * @param {Bone} rootBone
      * @param {{[gltfAnimationName: string]: string | number}} animationDictionary 
      */
-    constructor(gltfAnimations, skin, animationDictionary = {}) {
-        this.#rootBone = skin.root
+    constructor(gltfAnimations, rootBone, animationDictionary = {}) {
+
+        this.#rootBone = rootBone
         this.#initInitialPose()
         this.#initPoseSaved()
         this.#initTracks(gltfAnimations, animationDictionary)
@@ -347,13 +343,18 @@ export class Animations {
         this.#updateTime(deltaTime, animation)
 
         this.#rootBone.traverse((bone) => { this.#updateBone(bone) })
+        this.#rootBone.update()
     }
 
-    play(animationName) {
+    play(animationName, timeUpdate) {
         if (this.#currentAnimationName === animationName) return
         this.#fadeTime = 0
         this.#saveCurrentPose()
         this.#currentAnimationName = animationName
+
+        if (timeUpdate >= 0) {
+            this.setTimeUpdate(timeUpdate)
+        }
     }
 
     stop() { this.#currentAnimationName = '' }

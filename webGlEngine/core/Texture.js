@@ -23,6 +23,7 @@ export class Texture {
     format
     type
 
+    autoDataUpdate = false
     needsDataUpdate = false
     needsParametersUpdate = true
 
@@ -64,7 +65,7 @@ export class Texture {
         type = 'UNSIGNED_BYTE',
 
         scale,
-
+        autoDataUpdate = false,
     } = {}) {
 
 
@@ -85,6 +86,8 @@ export class Texture {
         this.border = border
         this.format = format
         this.type = type
+
+        this.autoDataUpdate = autoDataUpdate
 
         if (data.constructor === HTMLImageElement) {
             data.onload = () => {

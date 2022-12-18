@@ -1,7 +1,9 @@
+import { Sphere } from "../../math/Sphere.js"
 import { Vector3, _up } from "../../math/Vector3.js"
 import { Vector3Helper } from "../../webGlEngine/helpers/Vector3Helper.js"
 import { SkinnedNode } from "../../webGlEngine/nodes/SkinnedNode.js"
 import { BLADER_ID, FIFI_ID } from "../constants/constantsEntities.js"
+import { service3D } from "../services/service3D.js"
 import { serviceLoop } from "../services/serviceLoop.js"
 import { blader3d } from "./blader/Blader3D.js"
 import { fifi3d } from "./witch/Fifi3D.js"
@@ -60,6 +62,7 @@ export class Entity3D {
 
         this.nodePosition = this.#skinnedNode.position
 
+        service3D.atmosphere.addBody(new Sphere(this.nodePosition, 1), this.velocity)
         instances[entityId] = this
     }
 
@@ -76,8 +79,7 @@ export class Entity3D {
     #updateNewUpdate() {
         if (this.newUpdate === false) return
         this.#skinnedNode.quaternion.setFromAxisAngle(_up, this.rotation)
-        this.#skinnedNode.animations.play(this.animation)
-        if (this.animationTime > -0.1) this.#skinnedNode.animations.setTimeUpdate(this.animationTime)
+        this.#skinnedNode.animations.play(this.animation, this.animationTime)
         this.#skinnedNode.worldMatrixNeedsUpdates = true
         this.newUpdate = false
     }
@@ -95,8 +97,8 @@ export class Entity3D {
         this.nodePosition.y = (this.velocity.y * elapsedTime) + this.position.y
         this.nodePosition.z = (this.velocity.z * elapsedTime) + this.position.z
 
-        this.velocityHelper.setOrigin(this.nodePosition);
-        this.velocityHelper.setDirection(this.velocity);
+        this.velocityHelper.setOrigin(this.nodePosition)
+        this.velocityHelper.setDirection(this.velocity)
 
         this.#skinnedNode.worldMatrixNeedsUpdates = true
     }

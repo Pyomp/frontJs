@@ -26,11 +26,9 @@ mat4 skinMatrix = getBoneMatrix(a_joints[0]) * a_weights[0] +
 
 
 export class Skin {
-
     static vs_pars = vs_pars
     static vs_main = vs_main
 
-    #texture
     /**
      * @param {GltfNode} gltfNode
      * @param {Node3D} node3D
@@ -42,7 +40,7 @@ export class Skin {
         const height = gltfNode.skin.bonesCount
         const data = new Float32Array(width * height)
 
-        this.#texture = new Texture({
+        const texture = new Texture({
             data: data,
 
             wrapS: 'CLAMP_TO_EDGE',
@@ -58,20 +56,17 @@ export class Skin {
             border: 0,
             format: 'RGBA',
             type: 'FLOAT',
+
+            autoDataUpdate: true,
         })
 
         node3D.traverse(node => {
             for (const object of node.objects) {
-                object.textures['u_jointTexture'] = this.#texture
+                object.textures['u_jointTexture'] = texture
             }
         })
 
         this.root = new Bone(gltfNode.skin.root, data, inverseBindMatrices)
-    }
-
-    update() {
-        this.root.update()
-        this.#texture.needsDataUpdate = true
     }
 
     dispose() { }

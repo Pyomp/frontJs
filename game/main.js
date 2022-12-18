@@ -16,6 +16,7 @@ import { helperModels } from "../webGlEngine/helpers/helpersInit.js"
 
 await initCaches()
 await initServiceWorker()
+if (!window.SharedArrayBuffer) location.reload()
 
 const { provider, token, serversState } = await initAuthentication()
 

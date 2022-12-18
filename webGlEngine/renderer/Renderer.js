@@ -252,7 +252,8 @@ export class Renderer {
      * @param {string} textureName
      */
     #updateTextureData(program, texture, textureName) {
-        if (texture.needsDataUpdate === true) {
+        if (texture.needsDataUpdate === true || texture.autoDataUpdate === true) {
+  
             this.gl.texImage2D(this.gl[texture.target], texture.level, this.gl[texture.internalformat], texture.width, texture.height, texture.border,
                 this.gl[texture.format], this.gl[texture.type], texture.data)
 

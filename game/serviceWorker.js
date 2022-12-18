@@ -13,10 +13,24 @@ self.addEventListener('fetch', (e) => {
     const origin = location.origin
     const url = req.url
     if (
-        origin !== url.substring(0, origin.length)
+        origin === 'http://localhost:5500'
+        || origin !== url.substring(0, origin.length)
         || url.includes(`version.txt`)) {
         e.respondWith(
+
             fetch(req)
+                .then((response) => {
+
+                    const newHeaders = new Headers(response.headers)
+                    newHeaders.set("Cross-Origin-Embedder-Policy", "require-corp")
+                    newHeaders.set("Cross-Origin-Opener-Policy", "same-origin")
+
+                    return new Response(response.body, {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: newHeaders,
+                    })
+                })
                 .catch((err) => { console.warn(url, err) })
         )
     } else {
@@ -25,7 +39,18 @@ self.addEventListener('fetch', (e) => {
                 return response
             } else {
                 return fetch(req)
-                    .then((response) => {
+                    .then((initialResponse) => {
+
+                        const newHeaders = new Headers(initialResponse.headers)
+                        newHeaders.set("Cross-Origin-Embedder-Policy", "require-corp")
+                        newHeaders.set("Cross-Origin-Opener-Policy", "same-origin")
+
+                        const response = new Response(initialResponse.body, {
+                            status: initialResponse.status,
+                            statusText: initialResponse.statusText,
+                            headers: newHeaders,
+                        })
+
                         let responseClone = response.clone()
                         caches.open('main').then((cache) => {
                             cache.put(req, responseClone)

@@ -42,6 +42,7 @@ async function init() {
     contentContainer.style.pointerEvents = 'none'
     contentContainer.style.overflowX = 'hidden'
     contentContainer.style.overflowY = 'auto'
+    contentContainer.style.userSelect = 'none'
     contentContainer.onpointerdown = (event) => { event.preventDefault(); event.stopPropagation() }
     contentContainer.onpointerup = (event) => { event.preventDefault(); event.stopPropagation() }
 

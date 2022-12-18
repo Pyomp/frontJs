@@ -84,7 +84,6 @@ export class Node3D {
     }
 
     updateNormalMatrix() {
-        // this.modelViewMatrix.multiplyMatrices(camera.matrixWorldInverse, object.matrixWorld)
         this.normalMatrix.getNormalMatrix(this.worldMatrix)
         for (const object of this.objects) {
             if (object.uniforms['u_normalMatrix'])

@@ -2,6 +2,7 @@ import { Quaternion } from '../../math/Quaternion.js'
 import { Vector3 } from '../../math/Vector3.js'
 import { Node3D } from '../core/Node3D.js'
 import { Animations } from '../renderer/skinning/Animations.js'
+import { SkinAnimationsMain } from '../renderer/skinning/animationWorker/SkinAnimationsMain.js'
 import { Skin } from '../renderer/skinning/Skin.js'
 import { GltfMesh } from './objects/GltfMesh.js'
 
@@ -28,9 +29,12 @@ export class SkinnedNode extends Node3D {
             parent: null,
         })
 
-        this.skin = new Skin(gltfNode, this)
-        this.animations = new Animations(gltfNode.skin.animations, this.skin, animationDictionary)
-
+        if (SkinAnimationsMain.initialized) {
+            this.animations = new SkinAnimationsMain(this, gltfNode, animationDictionary)
+        } else {
+            this.skin = new Skin(gltfNode, this)
+            this.animations = new Animations(gltfNode.skin.animations, this.skin.root, animationDictionary)
+        }
         parent.addNode(this)
     }
 
@@ -38,7 +42,6 @@ export class SkinnedNode extends Node3D {
         super.onBeforeRender()
 
         // TODO animation frustum
-        this.animations.update(dt)
-        this.skin.update()
+        if(!SkinAnimationsMain.initialized) this.animations.update(dt)
     }
 }
