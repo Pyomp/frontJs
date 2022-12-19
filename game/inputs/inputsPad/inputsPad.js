@@ -10,8 +10,8 @@ export function initInputsPad() {
     let y = 0
 
 
-    const baseX = 160
-    const baseY = 160
+    const baseX = 120
+    const baseY = 120
 
     const bgEdgeFollow = 60
 
