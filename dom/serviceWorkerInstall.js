@@ -14,14 +14,17 @@ export const initCaches = async () => {
 
     if (lastVersion !== version) {
         const keys = await caches.keys()
-        await Promise.all(keys.map((key) => {
-            caches.delete(key)
-        }))
-        const cache = await caches.open('main')
-        await cache.addAll([
-            './',
-        ])
+        await Promise.all(keys.map((key) => caches.delete(key)))
+
         localStorage.setItem('appVersion', version)
+
+        if (navigator.serviceWorker) {
+            await Promise.all(
+                (await navigator.serviceWorker.getRegistrations())
+                    .map((swRegistration) => swRegistration.unregister())
+            )
+        }
+
         console.log('Cache cleared.')
         location.reload()
     }
@@ -29,17 +32,21 @@ export const initCaches = async () => {
 
 /** see `initCaches` function documentation */
 export const initServiceWorker = (url = './serviceWorker.js', scope = '/') => {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register(url, { type: 'module' }).then((reg) => {
-            if (reg.installing) {
-                location.reload()
-            } else if (reg.waiting) {
-                location.reload()
-            } else if (reg.active) { 
-                // console.log('Service worker active')
-            }
-        }).catch((error) => {
-            console.warn('Registration failed with ' + error)
-        })
-    }
+    return new Promise((resolve) => {
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register(url, { type: 'module' }).then((reg) => {
+                if (reg.installing) {
+                    location.reload()
+                } else if (reg.waiting) {
+                    location.reload()
+                } else {
+                    resolve()
+                    // console.log('Service worker active')
+                }
+            }).catch((error) => {
+                resolve()
+                console.warn('Registration failed with ' + error)
+            })
+        }
+    })
 }
