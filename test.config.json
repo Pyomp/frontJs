@@ -1,0 +1,11 @@
+{
+  "maxUnitTestDuration": 2000,
+  "maxSimultaneousRunningTest": 4,
+  "foldersToBeIgnored": [
+    "node_modules",
+    ".git",
+    ".chromeTestDataDir",
+    ".stfolder",
+    ".vscode"
+  ]
+}

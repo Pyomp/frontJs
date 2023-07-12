@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "es2022",
+    "target": "es2022",
+    "moduleResolution": "classic",
+    "checkJs": true,
+    // "experimentalDecorators": true,
+    "alwaysStrict": true,
+    "baseUrl": ".",
+    "disableSizeLimit": true,
+    // "forceConsistentCasingInFileNames": true,
+    //"paths": {}
+    "pretty": true,
+    "rootDir": ".",
+    "declaration": true
+  },
+  "exclude": ["build", "builder", "node_modules"]
+}

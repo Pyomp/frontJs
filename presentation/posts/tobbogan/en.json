@@ -1,0 +1,6 @@
+{
+    "title1": "title1",
+    "paragraphe1": "First, I have defined title using the i18n module. One problem is I want multiple internationalization file. As i18n is global, it will be shared between this post and other part of the app (other posts and main app). So I want to be able to register and unregister dictionaries in my i18n module.",
+    "title2": "title2",
+    "paragraphe2": "paragraphe2"
+}

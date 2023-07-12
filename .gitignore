@@ -1,0 +1,12 @@
+.git
+.vscode
+.stignore
+**/*.blend1
+**/node_modules
+**/package-lock.json
+dist
+.chromeTestDataDir
+.blend1
+**/assets/icons
+node_modules
+.vscode

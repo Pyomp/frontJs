@@ -1,0 +1,45 @@
+export const ANIMATION_IDLE = 0
+export const ANIMATION_RUN = 1
+export const ANIMATION_JUMP0 = 2
+export const ANIMATION_JUMP1 = 3
+export const ANIMATION_JUMP2 = 4
+export const ANIMATION_SLIDE = 5
+export const ANIMATION_FALLING = 6
+
+export const ANIMATION_STAGGER = 7
+export const ANIMATION_KNOCKDOWN = 8
+export const ANIMATION_BLOCK_TRIGGERED = 9
+
+export const ANIMATION_ACTION0 = 10000;
+export const ANIMATION_ACTION1 = 10001;
+export const ANIMATION_ACTION2 = 10002;
+export const ANIMATION_ACTION3 = 10003;
+export const ANIMATION_ACTION4 = 10004;
+export const ANIMATION_ACTION5 = 10005;
+export const ANIMATION_ACTION6 = 10006;
+export const ANIMATION_ACTION7 = 10007;
+export const ANIMATION_ACTION8 = 10008;
+export const ANIMATION_ACTION9 = 10009;
+export const ANIMATION_ACTION10 = 10010;
+export const ANIMATION_ACTION11 = 10011;
+export const ANIMATION_ACTION12 = 10012;
+export const ANIMATION_ACTION13 = 10013;
+export const ANIMATION_ACTION14 = 10014;
+export const ANIMATION_ACTION15 = 10015;
+
+export const ANIMATION_STATE0 = 20000;
+export const ANIMATION_STATE1 = 20001;
+export const ANIMATION_STATE2 = 20002;
+export const ANIMATION_STATE3 = 20003;
+export const ANIMATION_STATE4 = 20004;
+export const ANIMATION_STATE5 = 20005;
+export const ANIMATION_STATE6 = 20006;
+export const ANIMATION_STATE7 = 20007;
+export const ANIMATION_STATE8 = 20008;
+export const ANIMATION_STATE9 = 20009;
+export const ANIMATION_STATE10 = 20010;
+export const ANIMATION_STATE11 = 20011;
+export const ANIMATION_STATE12 = 20012;
+export const ANIMATION_STATE13 = 20013;
+export const ANIMATION_STATE14 = 20014;
+export const ANIMATION_STATE15 = 20015;

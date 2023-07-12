@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg5"
+   width="100"
+   height="100"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01, custom)"
+   viewBox="0 0 100 100"
+   sodipodi:docname="padBase.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="4.2416"
+     inkscape:cx="49.155979"
+     inkscape:cy="62.712184"
+     inkscape:window-width="1920"
+     inkscape:window-height="1115"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5"
+     inkscape:lockguides="false" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient1761">
+      <stop
+         style="stop-color:#feaa00;stop-opacity:0.49692273;"
+         offset="0"
+         id="stop1757" />
+      <stop
+         style="stop-color:#fff59b;stop-opacity:0.49734336;"
+         offset="1"
+         id="stop1759" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1761"
+       id="linearGradient1763"
+       x1="50"
+       y1="90"
+       x2="50"
+       y2="10"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <circle
+     style="fill:#000000;fill-opacity:0.2;stroke-width:0.132292"
+     r="45"
+     cy="50"
+     cx="50"
+     id="circle4088" />
+  <ellipse
+     style="fill:none;fill-opacity:0.2;stroke-width:0.5;stroke:url(#linearGradient1763);stroke-opacity:1"
+     cx="50"
+     cy="50"
+     id="path1680"
+     rx="40"
+     ry="40" />
+</svg>
