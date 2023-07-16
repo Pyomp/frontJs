@@ -71,7 +71,7 @@ export const puwu3d = {
         'puwuKnockdown': ANIMATION_KNOCKDOWN,
         'puwuBlockTriggered': ANIMATION_BLOCK_TRIGGERED,
 
-        'puwuAction0': ANIMATION_ACTION0,
+        'thunderStrike': ANIMATION_ACTION0,
         'puwuAction1Auto1': ANIMATION_ACTION1,
         'puwuAction2Auto2': ANIMATION_ACTION2,
         'puwuAction3Auto3': ANIMATION_ACTION3,
