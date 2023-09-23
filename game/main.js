@@ -3,9 +3,8 @@
 import "../modules/dom/styles/styles.js"
 // import { menu } from "./components/menu/menu.js" 
 import { authentication } from "./views/authentication.js"
-import { initGame } from "./game.js"
 import { serverSelection } from "./views/serverSelection.js"
-import { websocketFramesGame } from "./globals/websocketFramesGame/websocketFramesGame.js"
+import { websocketFramesGame } from "./globals/websocketFramesGame.js"
 import { websocketGame } from "./globals/websocketGame.js"
 import { inputsControls } from "./globals/inputs/inputsControls.js"
 import { store } from "./globals/store.js"
@@ -17,6 +16,7 @@ import { context3D } from "./globals/context3D.js"
 import { loopRaf } from "../modules/globals/loopRaf.js"
 import { FPSView } from "../modules/webGlEngine/debug/components/FPSView.js"
 import './globals/console.js'
+import { entityManager } from "./entities/entityManager.js"
 
 await initCaches()
 
@@ -29,18 +29,20 @@ const { provider, token, serversState } = await authentication.init()
 
 const host = await serverSelection.init()
 
-await helperModels.init
+// await helperModels.init
 
-await initGame()
+websocketGame.connect(provider, token, host + '/game')
+
+await store.init()
 
 inputsAction.init()
 inputsControls.init()
 
 websocketFramesGame.init()
-store.init()
-
-websocketGame.connect(provider, token, host + '/game')
 
 // await menu.init()
 context3D.init()
 loopRaf.init(context3D.renderer, context3D.controls)
+loopRaf.beforeRenderListeners.add(()=>{
+    entityManager.update()
+})

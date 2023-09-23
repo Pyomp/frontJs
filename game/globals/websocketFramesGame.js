@@ -1,22 +1,17 @@
-import { isMobile } from "../../../modules/dom/browserInfo.js"
-import { PI } from "../../../modules/math/MathUtils.js"
-import { inputsAction } from "../../views/slots.js"
-import { inputsControls } from "../inputs/inputsControls.js"
-import { initInputsMove } from "../inputs/inputsMove.js"
-import { context3D } from "../context3D.js"
-import { loopRaf } from "../../../modules/globals/loopRaf.js"
-import { websocketGame } from "../websocketGame.js"
-import { frameHandlerActionsCooldown } from "./handlerActionsCooldown.js"
-import { frameHandlerEntity } from "./handlerEntity.js"
-import { frameHandlerZone0 } from "./zones/handlerZone0.js"
+import { isMobile } from "../../modules/dom/browserInfo.js"
+import { PI } from "../../modules/math/MathUtils.js"
+import { inputsAction } from "../views/slots.js"
+import { inputsControls } from "./inputs/inputsControls.js"
+import { initInputsMove } from "./inputs/inputsMove.js"
+import { context3D } from "./context3D.js"
+import { loopRaf } from "../../modules/globals/loopRaf.js"
+import { websocketGame } from "./websocketGame.js"
+import { entityManager } from "../entities/entityManager.js"
+import { managerZones } from "../zones/managerZones.js"
 
 let nextControlsUpdate = 0
 
 function init() {
-    const dispatcher = {
-        [1]: (view, cursor) => frameHandlerEntity(view, cursor, 1),
-    }
-
     const inputsMove = initInputsMove()
 
     let lastDataViewUpdate
@@ -26,11 +21,11 @@ function init() {
     const viewControls = new DataView(bufferControls)
     viewControls.setUint16(0, 1, true)
 
-    websocketGame.binaryDispatcher[2] = frameHandlerZone0
-    websocketGame.binaryDispatcher[3] = frameHandlerActionsCooldown
+    websocketGame.binaryDispatcher[2] = managerZones.fromFrame
+    websocketGame.binaryDispatcher[3] = inputsAction.fromFrame
 
     const update = () => {
-        if (websocketGame.lastGameFrameUpdate !== lastDataViewUpdate) {
+        if (websocketGame.lastGameFrameUpdate !== lastDataViewUpdate && managerZones.isReady) {
             lastDataViewUpdate = websocketGame.lastGameFrameUpdate
 
             const view = websocketGame.gameFrameView
@@ -38,14 +33,9 @@ function init() {
 
             let cursor = view.byteOffset + 1
             while (cursor < totalLength) {
-                const family = view.getUint16(cursor, true)
+                const familyId = view.getUint16(cursor, true)
                 cursor += 2
-                if (dispatcher[family]) {
-                    cursor = dispatcher[family](view, cursor)
-                } else {
-                    console.warn(`frame corrupted`)
-                    return
-                }
+                cursor += entityManager.updateFrame(familyId, view, cursor)
             }
 
             websocketFramesGame.lastUpdate = loopRaf.perfNowSecond

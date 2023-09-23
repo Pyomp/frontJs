@@ -8,28 +8,40 @@ const zoneDictionary = {
     [2]: Zone0
 }
 
-let isChangingScene = false
-let currentZone
+let _isChangingScene = false
+
+async function updateZone(id) {
+    if (_isChangingScene) return
+
+    if (currentId !== id) {
+        _isChangingScene = true
+        managerZones.isReady = false
+        managerZones.node3D = undefined
+        zoneEntity?.dispose()
+        zoneDictionary[currentId]?.free()
+
+        currentId = id
+
+        await zoneDictionary[currentId].init()
+        const zone = new zoneDictionary[currentId]()
+        context3D.controls.groundGeometries = zone.groundGeometries
+        managerZones.isReady = true
+        managerZones.node3D = zone.node3D
+    }
+
+    _isChangingScene = false
+}
+
 export const managerZones = {
-    async updateZone(id) {
-        if (isChangingScene) return
+    fromFrame(view, offset) {
+        let cursor = offset
+        const zoneId = view.getUint16(cursor, true)
+        cursor += 2
 
-        if (currentId !== id) {
-            isChangingScene = true
-            this.node3D = undefined
-            zoneEntity?.dispose()
-            zoneDictionary[currentId]?.destroy()
+        updateZone(zoneId)
 
-            currentId = id
-
-            await zoneDictionary[currentId].init()
-            const zone = new zoneDictionary[currentId]()
-            context3D.controls.groundGeometries = zone.groundGeometries
-            this.node3D = zone.node3D
-        }
-
-        isChangingScene = false
+        return cursor
     },
-
-    node3D: undefined
+    node3D: undefined,
+    isReady: false
 }

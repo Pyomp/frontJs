@@ -55,8 +55,27 @@ function init() {
     }
 }
 
+const setCooldown = (actionId, cooldown, maxCooldown) => { }
+
 export const inputsAction = {
     init,
-    setCooldown: (actionId, cooldown, maxCooldown) => { },
+    fromFrame(view, offset) {
+        const length = view.getUint16(offset, true)
+        offset += 2
+
+        const limit = length + offset
+
+        while (offset < limit) {
+            const action = view.getUint8(offset)
+            offset += 1
+            const cooldown = view.getFloat32(offset, true)
+            offset += 4
+            const maxCooldown = view.getFloat32(offset, true)
+            offset += 4
+            setCooldown(action, cooldown, maxCooldown)
+        }
+
+        return offset
+    },
     binaryActions: 0
 }

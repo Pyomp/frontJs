@@ -9,6 +9,7 @@ import { Spherical } from '../../../modules/math/Spherical.js'
 import { PI, PI2 } from '../../../modules/math/MathUtils.js'
 import { PointLight } from '../../../modules/webGlEngine/renderer/modules/lightsManager/PointLights.js'
 import { loopRaf } from '../../../modules/globals/loopRaf.js'
+import { Puwu3d } from '../../entities/puwu/Puwu3D.js'
 
 /**
  *  @type {{
@@ -27,81 +28,85 @@ import { loopRaf } from '../../../modules/globals/loopRaf.js'
 */
 const cache = {}
 
-async function init() {
+async function initZone() {
+    const gltfNodes = await context3D.glbLoader.load(new URL('../../../assets/3Dmodels/zone0/zone0.glb', import.meta.url))
     {
-        const gltfNodes = await context3D.glbLoader.load(new URL('../../../assets/3Dmodels/zone0/zone0.glb', import.meta.url))
-        {
-            const node = gltfNodes['terrainStart']
-            cache.splattingTexture = new Texture({})
-            cache.splattingTexture.data.src = new URL('../../../assets/3Dmodels/zone0/textureSplatting.png', import.meta.url).href
-            cache.map1 = new Texture({
-                minFilter: 'LINEAR_MIPMAP_NEAREST',
-                magFilter: 'LINEAR',
-                wrapS: 'REPEAT', wrapT: 'REPEAT',
-                scale: new Vector2(60, 60)
-            })
-            cache.map1.data.src = new URL('../../../assets/textures/Grass001_1K-JPG/Grass001_1K_Color.jpg', import.meta.url).href
+        const node = gltfNodes['terrainStart']
+        cache.splattingTexture = new Texture({})
+        cache.splattingTexture.data.src = new URL('../../../assets/3Dmodels/zone0/textureSplatting.png', import.meta.url).href
+        cache.map1 = new Texture({
+            minFilter: 'LINEAR_MIPMAP_NEAREST',
+            magFilter: 'LINEAR',
+            wrapS: 'REPEAT', wrapT: 'REPEAT',
+            scale: new Vector2(60, 60)
+        })
+        cache.map1.data.src = new URL('../../../assets/textures/Grass001_1K-JPG/Grass001_1K_Color.jpg', import.meta.url).href
 
-            cache.map2 = new Texture({
-                minFilter: 'LINEAR_MIPMAP_NEAREST',
-                wrapS: 'REPEAT', wrapT: 'REPEAT', scale: new Vector2(40, 40)
-            })
-            cache.map2.data.src = new URL('../../../assets/textures/Ground037_1K-JPG/Ground037_1K_Color.jpg', import.meta.url).href
+        cache.map2 = new Texture({
+            minFilter: 'LINEAR_MIPMAP_NEAREST',
+            wrapS: 'REPEAT', wrapT: 'REPEAT', scale: new Vector2(40, 40)
+        })
+        cache.map2.data.src = new URL('../../../assets/textures/Ground037_1K-JPG/Ground037_1K_Color.jpg', import.meta.url).href
 
-            cache.map3 = new Texture({
-                minFilter: 'LINEAR_MIPMAP_NEAREST',
-                wrapS: 'REPEAT', wrapT: 'REPEAT', scale: new Vector2(5, 5)
-            })
-            cache.map3.data.src = new URL('../../../assets/textures/Ground031_1K-JPG/Ground031_1K_Color.jpg', import.meta.url).href
+        cache.map3 = new Texture({
+            minFilter: 'LINEAR_MIPMAP_NEAREST',
+            wrapS: 'REPEAT', wrapT: 'REPEAT', scale: new Vector2(5, 5)
+        })
+        cache.map3.data.src = new URL('../../../assets/textures/Ground031_1K-JPG/Ground031_1K_Color.jpg', import.meta.url).href
 
-            cache.groundGltfPrimitive = node.mesh.primitives[0]
-        }
-        {
-            cache.rockGltfPrimitive = gltfNodes['rock1'].mesh.primitives[0]
-            const texture = new Texture({
-                wrapS: 'REPEAT',
-                wrapT: 'REPEAT',
-                minFilter: 'LINEAR_MIPMAP_NEAREST',
-                scale: new Vector2(8, 8)
-            })
-            texture.data.src = new URL('../../../assets/textures/Rock037_1K-JPG/Rock037_1K_Color.jpg', import.meta.url).href
-            cache.rockGltfPrimitive.material.textures['u_map'] = texture
-        }
-        {
-            cache.sliderGltfPrimitive = gltfNodes['slider'].mesh.primitives[0]
-            const texture = new Texture({
-                wrapS: 'REPEAT',
-                wrapT: 'REPEAT',
-                minFilter: 'LINEAR_MIPMAP_NEAREST',
-                scale: new Vector2(8, 8)
-            })
-            texture.data.src = new URL('../../../assets/textures/Rock037_1K-JPG/Rock037_1K_Color.jpg', import.meta.url).href
-            cache.rockGltfPrimitive.material.textures['u_map'] = texture
-        }
-        {
-            cache.tobogganGltfPrimitive = gltfNodes['toboggan'].mesh.primitives[0]
-            cache.bowlGltfPrimitive = gltfNodes['bowl'].mesh.primitives[0]
-        }
+        cache.groundGltfPrimitive = node.mesh.primitives[0]
     }
     {
-        const gltfNodes = await context3D.glbLoader.load(new URL('./tree.glb', import.meta.url))
-        cache.treeGltfPrimitive = gltfNodes['tree'].mesh.primitives[0]
-        cache.leavesGltfPrimitive = gltfNodes['leafs'].mesh.primitives[0]
-        const texture = new Texture({})
-        texture.data.src = new URL('../../../assets/3Dmodels/zone0/leaves.png', import.meta.url).href
-        cache.leavesGltfPrimitive.material.textures['u_map'] = texture
+        cache.rockGltfPrimitive = gltfNodes['rock1'].mesh.primitives[0]
+        const texture = new Texture({
+            wrapS: 'REPEAT',
+            wrapT: 'REPEAT',
+            minFilter: 'LINEAR_MIPMAP_NEAREST',
+            scale: new Vector2(8, 8)
+        })
+        texture.data.src = new URL('../../../assets/textures/Rock037_1K-JPG/Rock037_1K_Color.jpg', import.meta.url).href
+        cache.rockGltfPrimitive.material.textures['u_map'] = texture
+    }
+    {
+        cache.sliderGltfPrimitive = gltfNodes['slider'].mesh.primitives[0]
+        const texture = new Texture({
+            wrapS: 'REPEAT',
+            wrapT: 'REPEAT',
+            minFilter: 'LINEAR_MIPMAP_NEAREST',
+            scale: new Vector2(8, 8)
+        })
+        texture.data.src = new URL('../../../assets/textures/Rock037_1K-JPG/Rock037_1K_Color.jpg', import.meta.url).href
+        cache.rockGltfPrimitive.material.textures['u_map'] = texture
+    }
+    {
+        cache.tobogganGltfPrimitive = gltfNodes['toboggan'].mesh.primitives[0]
+        cache.bowlGltfPrimitive = gltfNodes['bowl'].mesh.primitives[0]
     }
 }
 
-function destroy() {
+async function initTree() {
+    const gltfNodes = await context3D.glbLoader.load(new URL('./tree.glb', import.meta.url))
+    cache.treeGltfPrimitive = gltfNodes['tree'].mesh.primitives[0]
+    cache.leavesGltfPrimitive = gltfNodes['leafs'].mesh.primitives[0]
+    const texture = new Texture({})
+    texture.data.src = new URL('../../../assets/3Dmodels/zone0/leaves.png', import.meta.url).href
+    cache.leavesGltfPrimitive.material.textures['u_map'] = texture
+}
+
+async function init() {
+    return Promise.all([initZone(), initTree(), Puwu3d.init()])
+}
+
+function free() {
     for (const key in cache) {
         delete cache[key]
     }
+    Puwu3d.free()
 }
 
 export class Zone0 {
     static init = init
-    static destroy = destroy
+    static free = free
 
     #meshTerrain = new SplattingMesh(
         cache.groundGltfPrimitive,

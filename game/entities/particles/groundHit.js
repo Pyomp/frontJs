@@ -4,7 +4,7 @@ import { Vector3 } from "../../../modules/math/Vector3.js"
 import { context3D } from "../../globals/context3D.js"
 import { loopRaf } from "../../../modules/globals/loopRaf.js"
 
-const TIME_PARTICLE = 0.0005
+const TIME_PARTICLE = 0.001
 
 const _particlePosition = new Vector3()
 const _particleAcceleration = new Vector3()
@@ -12,7 +12,7 @@ const _quaternion = new Quaternion()
 
 export function particleGroundHit(position, normal) {
     let rest = 0
-    let particleCount = 30
+    let particleCount = 100
 
     const _position = new Vector3().copy(position)
     const _normal = new Vector3().copy(normal)
@@ -28,7 +28,7 @@ export function particleGroundHit(position, normal) {
 
             _particlePosition.set(0.5, 0, 0)
             _particlePosition.applyQuaternion(_quaternion).add(_position)
-            _particleAcceleration.set(100, 0, 0)
+            _particleAcceleration.set(50, 0, 0)
             _particleAcceleration.applyQuaternion(_quaternion)
 
             context3D.renderer.particleManager.setParticle([

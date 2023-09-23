@@ -1,12 +1,13 @@
-import { storeSettings } from "./stores/storeSettings.js"
 import { websocketGame } from "./websocketGame.js"
-
-function onAuthentication(data) { storeSettings.id = data.id }
 
 export const store = {
     init() {
-        delete this.init
-        websocketGame.jsonDispatcher[1] = onAuthentication
+        return new Promise((resolve) => {
+            websocketGame.jsonDispatcher[1] = (data) => {
+                store.id = data.id
+                resolve()
+            }
+        })
     },
-    settings: storeSettings
+    id: 0n,
 }

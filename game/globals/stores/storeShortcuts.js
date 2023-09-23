@@ -19,7 +19,6 @@ import {
     ACTION_9,
     ACTION_10,
     ACTION_11,
-
 } from '../../constants/constantsActions.js'
 
 export const storeShortcuts = {
